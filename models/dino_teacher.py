@@ -54,5 +54,21 @@ class DinoTeacher(nn.Module):
         seq_len = last_hidden.shape[1]
         expected = h * w
         prefix = max(seq_len - expected, 0)
+
+
+        if prefix < 0:
+            raise RuntimeError(
+                f"[DinoTeacher] seq_len smaller than expected patches: "
+                f"seq_len={seq_len}, expected={expected}, (h,w)=({h},{w}), patch_size={self.patch_size}"
+            )
+
+        if prefix != self.num_prefix_tokens:
+            raise RuntimeError(
+                f"[DinoTeacher] prefix token mismatch: "
+                f"seq_len={seq_len}, expected={expected}, prefix={prefix}, "
+                f"cfg_num_prefix_tokens={self.num_prefix_tokens}, (h,w)=({h},{w})"
+            )
+
+
         tokens = last_hidden[:, prefix:, :]  # [B, h*w, D]
         return tokens, (h, w)

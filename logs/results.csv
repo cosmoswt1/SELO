@@ -1,0 +1,5 @@
+exp_id,commit,seed,epochs,split,overall,fog,rain,snow,night,avg,delta_baseline,run_dir
+E1,cb5208e,1,5,val,56.74,72.84,59.20,57.93,36.21,56.55,0.00,/home/kevinlee01/SELO/runs/E1
+E1,cb5208e,1,5,val,56.74,72.84,59.20,57.93,36.21,56.55,0.00,/home/kevinlee01/SELO/runs/E1
+E1,cb5208e,1,5,val,56.74,72.84,59.20,57.93,36.21,56.55,0.00,runs/E1
+E3,cb5208e,1,5,val,54.51,70.75,61.02,54.73,30.52,54.26,-2.29,runs/E3

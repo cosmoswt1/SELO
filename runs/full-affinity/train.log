@@ -1,0 +1,22 @@
+2026-02-06 16:14:59 | Args: acdc_root=/mnt/d/ACDC conditions=['fog', 'night', 'rain', 'snow'] resize=1072 crop_size=1072 segformer_model=nvidia/segformer-b5-finetuned-cityscapes-1024-1024 dino_model=facebook/dinov3-vitl16-pretrain-lvd1689m num_classes=19 adapter_hidden_ratio=1.0 adapter_scale=1.0 epochs=5 batch_size=4 workers=4 lr=5e-05 lr_proj=None proj_warmup_steps=100 weight_decay=0.01 max_grad_norm=1.0 amp=True seed=1 grad_accum_steps=4 affinity_k=67 affinity_tau=0.07 lambda_aff=1.0 affinity_anchors=128 affinity_candidates=4096 affinity_kcenter_top_m=1500 affinity_per_image=1 wandb=False wandb_project=SELO wandb_entity= wandb_group= wandb_run_name= output_dir=/home/kevinlee01/SELO/runs/full-affinity log_every=50 diag_anchor_every=0 diag_anchor_dir= diag_anchor_max=0 diag_anchor_per_call=1
+2026-02-06 16:15:04 | Using batch_size=4, grad_accum_steps=4, effective_batch=16
+2026-02-06 16:15:04 | [phase] warmup_proj | lr_adapter=0.0 lr_proj=5e-05 | trainable=stage1_proj.weight, stage1_proj.bias
+2026-02-06 16:15:04 | [sched] warmup_steps=100 (effective=100) 이후 proj 고정 + adapter 학습
+2026-02-06 16:15:12 | Stage1 shape: (4, 64, 268, 268)
+2026-02-06 16:15:12 | Alignment: input=1072x1072, stage1=torch.Size([268, 268]) pooled=torch.Size([67, 67]), dino=67x67
+2026-02-06 16:15:12 | STEP 0 0 LOSS 2.120728
+2026-02-06 16:15:12 | DBG 0 0 base_rms=0.470140 delta_rms=0.000000 delta/base=0.000000 g_adapter=0.000000 g_proj=1.036546 adapter_scale=1.000000 lr_adapter=0.0 lr_proj=5e-05
+2026-02-06 16:15:12 | AFF 0 0 tau=0.07 candidates=1 anchors=1 k2=4489 p_t_max=0.0827 p_t_ent=5.2437 p_s_max=0.0356 p_s_ent=6.8108
+2026-02-06 16:18:55 | STEP 0 50 LOSS 2.087723
+2026-02-06 16:18:55 | DBG 0 50 base_rms=0.499362 delta_rms=0.000000 delta/base=0.000000 g_adapter=0.000000 g_proj=2.206507 adapter_scale=1.000000 lr_adapter=0.0 lr_proj=5e-05
+2026-02-06 16:18:55 | AFF 0 50 tau=0.07 candidates=1 anchors=1 k2=4489 p_t_max=0.1344 p_t_ent=4.7974 p_s_max=0.1098 p_s_ent=6.0921
+2026-02-06 16:22:35 | [phase] train_adapter | lr_adapter=5e-05 lr_proj=0.0 | trainable=stage1_adapter.scale, stage1_adapter.conv1.weight, stage1_adapter.conv1.bias, stage1_adapter.conv2.weight, stage1_adapter.conv2.bias
+2026-02-06 16:22:43 | STEP 0 100 LOSS 1.868425
+2026-02-06 16:22:43 | DBG 0 100 base_rms=0.464943 delta_rms=0.000000 delta/base=0.000000 g_adapter=0.055276 g_proj=0.000000 adapter_scale=1.000000 lr_adapter=5e-05 lr_proj=0.0
+2026-02-06 16:22:43 | AFF 0 100 tau=0.07 candidates=1 anchors=1 k2=4489 p_t_max=0.0646 p_t_ent=5.1337 p_s_max=0.0120 p_s_ent=7.1457
+2026-02-06 16:26:23 | STEP 0 150 LOSS 1.685214
+2026-02-06 16:26:23 | DBG 0 150 base_rms=0.510613 delta_rms=0.001214 delta/base=0.002377 g_adapter=0.133120 g_proj=0.000000 adapter_scale=1.000392 lr_adapter=5e-05 lr_proj=0.0
+2026-02-06 16:26:23 | AFF 0 150 tau=0.07 candidates=1 anchors=1 k2=4489 p_t_max=0.0594 p_t_ent=5.2995 p_s_max=0.0152 p_s_ent=6.9181
+2026-02-06 16:30:03 | STEP 0 200 LOSS 2.378146
+2026-02-06 16:30:03 | DBG 0 200 base_rms=0.422143 delta_rms=0.001788 delta/base=0.004236 g_adapter=0.150729 g_proj=0.000000 adapter_scale=1.001082 lr_adapter=5e-05 lr_proj=0.0
+2026-02-06 16:30:03 | AFF 0 200 tau=0.07 candidates=1 anchors=1 k2=4489 p_t_max=0.0740 p_t_ent=5.1098 p_s_max=0.0193 p_s_ent=7.4992

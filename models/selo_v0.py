@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 
 from .segformer_backbone import SegFormerBackbone
 from .dino_teacher import DinoTeacher
@@ -60,19 +59,27 @@ class SeloV0Model(nn.Module):
         for p in self.backbone.segformer.decode_head.parameters():
             p.requires_grad = False
 
-    def forward(self, x: torch.Tensor, use_dino: bool = True) -> dict:
-        feats = self.backbone.forward_encoder(x)
-        f1, f2, f3, f4 = feats
-        f1_raw = f1
-        f1_adapt = self.stage1_adapter(f1)
-        logits = self.backbone.forward_decoder([f1_adapt, f2, f3, f4])
+    def forward(
+        self,
+        x: torch.Tensor,
+        use_dino: bool = True,
+        compute_logits: bool = True,
+    ) -> dict:
+        f1_raw = self.backbone.forward_stage1(x)
+        f1_adapt = self.stage1_adapter(f1_raw)
 
         out = {
-            "logits": logits,
-            "features": {"f1": f1_adapt, "f2": f2, "f3": f3, "f4": f4},
+            "logits": None,
+            "features": {"f1": f1_adapt},
             "stage1_raw": f1_raw,
             "stage1_adapt": f1_adapt,
         }
+
+        if compute_logits:
+            f2, f3, f4 = self.backbone.forward_from_stage1(f1_adapt)
+            logits = self.backbone.forward_decoder([f1_adapt, f2, f3, f4])
+            out["logits"] = logits
+            out["features"].update({"f2": f2, "f3": f3, "f4": f4})
 
         if use_dino:
             with torch.no_grad():

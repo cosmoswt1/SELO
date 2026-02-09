@@ -126,7 +126,7 @@ def parse_args():
     p.add_argument("--acdc_root", type=str, required=True)
     p.add_argument("--split", type=str, default="val", choices=["val", "test"])
     p.add_argument("--conditions", nargs="+", default=["fog", "night", "rain", "snow"])
-    p.add_argument("--resize", type=int, default=540)
+    p.add_argument("--resize", type=int, default=1080)
     p.add_argument("--batch_size", type=int, default=1)
     p.add_argument("--workers", type=int, default=0)
 
@@ -192,6 +192,11 @@ def main():
     model.stage1_adapter.load_state_dict(ckpt["stage1_adapter"], strict=True)
     model.stage1_proj.load_state_dict(ckpt["stage1_proj"], strict=True)
     logger.info(f"Loaded adapter checkpoint: {args.ckpt}")
+    try:
+        scale_val = float(model.stage1_adapter.scale.detach().cpu().item())
+        logger.info(f"Adapter scale: {scale_val:.6f}")
+    except Exception:
+        logger.info("Adapter scale: <unavailable>")
 
     num_classes = args.num_classes
     total_hist = torch.zeros(num_classes, num_classes, device=device)
@@ -200,6 +205,7 @@ def main():
     failure_dict = defaultdict(list)
     max_failures = 3
 
+    logged_delta = False
     for batch in tqdm(loader, desc="Evaluation"):
         images = batch["image"].to(device)
         labels = batch["label"].to(device)
@@ -208,6 +214,12 @@ def main():
         with torch.no_grad():
             outputs = model(images, use_dino=False)
             logits = outputs["logits"]
+            if not logged_delta:
+                f_raw = outputs["stage1_raw"]
+                f_adapt = outputs["stage1_adapt"]
+                delta = (f_adapt - f_raw).pow(2).mean().sqrt().item()
+                logger.info(f"Stage1 adapt delta (L2 mean sqrt): {delta:.6f}")
+                logged_delta = True
 
         logits = F.interpolate(logits, size=labels.shape[-2:], mode="bilinear", align_corners=False)
         preds = logits.argmax(dim=1)

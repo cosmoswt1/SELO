@@ -1,0 +1,33 @@
+method: grid
+metric:
+  name: best_train_aff_kl
+  goal: minimize
+
+parameters:
+  lambda_aff:
+    values: [2, 3, 4, 5]
+
+command:
+  - bash
+  - -lc
+  - >
+    conda run -n selo python scripts/guard_gpu.py &&
+    conda run -n selo python train_selo_v0.py
+    --acdc_root ${ACDC_ROOT:-/mnt/d/ACDC}
+    --output_dir runs/sweep_lambda_aff/wandb/${WANDB_RUN_ID:-run}
+    --seed 1
+    --epochs 1
+    --resize 1072
+    --crop_size 1072
+    --batch_size 2
+    --grad_accum_steps 2
+    --workers 4
+    --affinity_k 7
+    --affinity_tau 0.1
+    --affinity_anchors 512
+    --lambda_aff ${lambda_aff}
+    --amp
+    --wandb
+    --wandb_project ${WANDB_PROJECT:-SELO}
+    --wandb_group ${WANDB_GROUP:-sweep_lambda_aff}
+    --wandb_run_name lambda_${lambda_aff}

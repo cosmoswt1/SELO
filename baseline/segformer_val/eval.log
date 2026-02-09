@@ -1,0 +1,27 @@
+2026-02-02 13:03:49 | Starting evaluation...
+2026-02-02 13:03:49 | Args: acdc_root=/mnt/d/ACDC split=val conditions=['fog', 'night', 'rain', 'snow'] resize=540 batch_size=1 workers=0 device=cuda segformer_model=nvidia/segformer-b5-finetuned-cityscapes-1024-1024 dino_model=facebook/dinov3-vitl16-pretrain-lvd1689m num_classes=19 mode=segformer init=normal init_std=0.02 safe_scale=0.0 safe_hidden_ratio=0.25 seed=0 max_batches=0 output_dir=baseline/segformer_val offline=True
+2026-02-02 13:03:49 | CUDA not available, falling back to CPU.
+2026-02-02 13:06:05 | Starting evaluation...
+2026-02-02 13:06:05 | Args: acdc_root=/mnt/d/ACDC split=val conditions=['fog', 'night', 'rain', 'snow'] resize=540 batch_size=1 workers=0 device=cpu segformer_model=nvidia/segformer-b5-finetuned-cityscapes-1024-1024 dino_model=facebook/dinov3-vitl16-pretrain-lvd1689m num_classes=19 mode=segformer init=normal init_std=0.02 safe_scale=0.0 safe_hidden_ratio=0.25 seed=0 max_batches=0 output_dir=baseline/segformer_val offline=True
+2026-02-02 13:19:40 | Mode: segformer
+2026-02-02 13:19:40 | Overall mIoU: 56.74%
+2026-02-02 13:19:40 | Condition mIoU: fog=72.84%, night=36.21%, rain=59.20%, snow=57.93%
+2026-02-02 13:19:40 | class_iou/road: 84.36%
+2026-02-02 13:19:40 | class_iou/sidewalk: 45.16%
+2026-02-02 13:19:40 | class_iou/building: 74.84%
+2026-02-02 13:19:40 | class_iou/wall: 36.26%
+2026-02-02 13:19:40 | class_iou/fence: 39.29%
+2026-02-02 13:19:40 | class_iou/pole: 49.33%
+2026-02-02 13:19:40 | class_iou/traffic light: 68.32%
+2026-02-02 13:19:40 | class_iou/traffic sign: 53.38%
+2026-02-02 13:19:40 | class_iou/vegetation: 77.56%
+2026-02-02 13:19:40 | class_iou/terrain: 38.29%
+2026-02-02 13:19:40 | class_iou/sky: 83.81%
+2026-02-02 13:19:40 | class_iou/person: 54.01%
+2026-02-02 13:19:40 | class_iou/rider: 30.41%
+2026-02-02 13:19:40 | class_iou/car: 80.75%
+2026-02-02 13:19:40 | class_iou/truck: 74.86%
+2026-02-02 13:19:40 | class_iou/bus: 52.57%
+2026-02-02 13:19:40 | class_iou/train: 60.92%
+2026-02-02 13:19:40 | class_iou/motorcycle: 40.03%
+2026-02-02 13:19:40 | class_iou/bicycle: 33.85%
