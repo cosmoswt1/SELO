@@ -249,9 +249,17 @@ class LocalAffinityKLLoss(nn.Module):
             else:
                 sim_t = self._local_sim_norm(teacher_norm, anchors) / self.tau
 
-        p_s = F.log_softmax(sim_s, dim=2)
-        p_t = F.softmax(sim_t, dim=2)
-        loss = F.kl_div(p_s, p_t, reduction="none").sum(dim=2)  # [B, M]
+        # Symmetric KL to discourage degenerate (overly-uniform) student distributions:
+        # 0.5 * KL(p_t || p_s) + 0.5 * KL(p_s || p_t)
+        p_s = F.log_softmax(sim_s, dim=2)  # log p_s
+        with torch.no_grad():
+            p_t_log = F.log_softmax(sim_t, dim=2)  # log p_t
+            p_t = p_t_log.exp()  # p_t
+
+        kl_t_s = F.kl_div(p_s, p_t, reduction="none").sum(dim=2)  # [B, M]
+        p_s_prob = p_s.exp()  # p_s
+        kl_s_t = (p_s_prob * (p_s - p_t_log)).sum(dim=2)  # [B, M]
+        loss = 0.5 * (kl_t_s + kl_s_t)
         out = loss.mean()
         if (not return_stats) and (not return_debug):
             return out
@@ -262,11 +270,28 @@ class LocalAffinityKLLoss(nn.Module):
             p_t_prob = p_t
             k2 = int(self.k * self.k)
             anchors_count = int(anchors.shape[1]) if anchors.ndim == 3 else int(anchors.shape[0])
+            radius = int(self.k // 2)
+            grid_total = int(max(0, (h - 2 * radius) * (w - 2 * radius)))
+
+            # Similarity (q@k) distribution stats before temperature scaling.
+            sim_s_raw = (sim_s * float(self.tau)).detach().float()
+            sim_t_raw = (sim_t * float(self.tau)).detach().float()
             stats = {
                 "tau": float(self.tau),
+                "grid_total": grid_total,
+                "candidates_req": int(self.candidates),
+                "anchors_req": int(self.anchors),
                 "candidates": int(candidate_anchors.shape[0]),
                 "anchors": anchors_count,
                 "k2": k2,
+                "sim_s_mean": float(sim_s_raw.mean().item()),
+                "sim_s_std": float(sim_s_raw.std(unbiased=False).item()),
+                "sim_s_max": float(sim_s_raw.max().item()),
+                "sim_t_mean": float(sim_t_raw.mean().item()),
+                "sim_t_std": float(sim_t_raw.std(unbiased=False).item()),
+                "sim_t_max": float(sim_t_raw.max().item()),
+                "kl_t_s": float(kl_t_s.mean().item()),
+                "kl_s_t": float(kl_s_t.mean().item()),
                 "p_t_max": float(p_t_prob.max(dim=2).values.mean().item()),
                 "p_t_ent": float(-(p_t_prob * (p_t_prob + 1e-6).log()).sum(dim=2).mean().item()),
                 "p_s_max": float(p_s_prob.max(dim=2).values.mean().item()),

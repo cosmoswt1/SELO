@@ -1,0 +1,298 @@
+2026-02-09 16:24:46 | Args: acdc_root=/mnt/d/ACDC conditions=['fog', 'night', 'rain', 'snow'] resize=1072 crop_size=1072 segformer_model=nvidia/segformer-b5-finetuned-cityscapes-1024-1024 dino_model=facebook/dinov3-vitl16-pretrain-lvd1689m num_classes=19 adapter_hidden_ratio=1.0 adapter_scale=1.0 epochs=1 batch_size=4 workers=4 lr=5e-05 lr_proj=None proj_warmup_steps=100 lr_proj_after_warmup=1e-05 proj_type=mlp proj_mlp_hidden=256 weight_decay=0.01 weight_decay_proj=None max_grad_norm=1.0 max_grad_norm_proj=None amp=True seed=1 grad_accum_steps=4 affinity_k=7 affinity_tau=0.07 lambda_aff=1.0 affinity_anchors=256 affinity_candidates=4096 affinity_kcenter_top_m=1500 affinity_per_image=1 wandb=False wandb_project=SELO wandb_entity= wandb_group= wandb_run_name= output_dir=/home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5 log_every=50 diag_anchor_every=100 diag_anchor_dir= diag_anchor_max=40 diag_anchor_per_call=1
+2026-02-09 16:24:46 | [diag] save train anchors every=100 per_call=1 max=40 dir=/home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5/diag_train_anchors
+2026-02-09 16:24:48 | Using batch_size=4, grad_accum_steps=4, effective_batch=16
+2026-02-09 16:24:48 | [phase] warmup_proj | lr_adapter=0.0 lr_proj=5e-05 | trainable=stage3_proj.proj.0.weight, stage3_proj.proj.0.bias, stage3_proj.proj.2.ln.weight, stage3_proj.proj.2.ln.bias, stage3_proj.proj.3.weight, stage3_proj.proj.3.bias
+2026-02-09 16:24:48 | [sched] warmup_steps=100 (effective=100) 이후 adapter 학습 + proj lr=1e-05
+2026-02-09 16:24:55 | Stage3 shape: (4, 320, 67, 67)
+2026-02-09 16:24:55 | Alignment: input=1072x1072, stage3=torch.Size([67, 67]) dino=67x67
+2026-02-09 16:24:55 | STEP 0 0 LOSS 1.502443
+2026-02-09 16:24:55 | DBG 0 0 base_rms=0.646221 delta_rms=0.000000 delta/base=0.000000 g_adapter=0.000000 g_proj=1.462741 adapter_scale=1.000000 lr_adapter=0.0 lr_proj=5e-05
+2026-02-09 16:24:55 | AFF 0 0 tau=0.07 candidates=3721 anchors=256 (req a=256 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.5096/0.2438/1.0000 sim_t(mean/std/max)=0.7672/0.1529/1.0000 p_t_max=0.1765 p_t_ent=3.0199 p_s_max=0.5707 p_s_ent=1.5847
+2026-02-09 16:26:05 | STEP 0 50 LOSS 0.630524
+2026-02-09 16:26:05 | DBG 0 50 base_rms=0.667874 delta_rms=0.000000 delta/base=0.000000 g_adapter=0.000000 g_proj=2.430436 adapter_scale=1.000000 lr_adapter=0.0 lr_proj=5e-05
+2026-02-09 16:26:05 | AFF 0 50 tau=0.07 candidates=3721 anchors=256 (req a=256 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.6904/0.1919/1.0000 sim_t(mean/std/max)=0.7670/0.1525/1.0000 p_t_max=0.1798 p_t_ent=3.0199 p_s_max=0.3413 p_s_ent=2.5338
+2026-02-09 16:27:14 | [phase] train_adapter | lr_adapter=5e-05 lr_proj=1e-05 | trainable=stage3_adapter.scale, stage3_adapter.conv1.weight, stage3_adapter.conv1.bias, stage3_adapter.dwconv.weight, stage3_adapter.conv2.weight, stage3_adapter.conv2.bias, stage3_proj.proj.0.weight, stage3_proj.proj.0.bias, stage3_proj.proj.2.ln.weight, stage3_proj.proj.2.ln.bias, stage3_proj.proj.3.weight, stage3_proj.proj.3.bias
+2026-02-09 16:27:18 | STEP 0 100 LOSS 0.355400
+2026-02-09 16:27:18 | DBG 0 100 base_rms=0.619531 delta_rms=0.000000 delta/base=0.000000 g_adapter=0.005450 g_proj=0.193637 adapter_scale=1.000000 lr_adapter=5e-05 lr_proj=1e-05
+2026-02-09 16:27:18 | AFF 0 100 tau=0.07 candidates=3721 anchors=256 (req a=256 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8529/0.1154/1.0000 sim_t(mean/std/max)=0.7758/0.1553/1.0000 p_t_max=0.1640 p_t_ent=3.0727 p_s_max=0.1249 p_s_ent=3.4420
+2026-02-09 16:28:28 | STEP 0 150 LOSS 0.380341
+2026-02-09 16:28:28 | DBG 0 150 base_rms=0.681358 delta_rms=0.000632 delta/base=0.000928 g_adapter=0.012777 g_proj=0.456384 adapter_scale=1.000490 lr_adapter=5e-05 lr_proj=1e-05
+2026-02-09 16:28:28 | AFF 0 150 tau=0.07 candidates=3721 anchors=256 (req a=256 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8437/0.1004/1.0000 sim_t(mean/std/max)=0.7595/0.1517/1.0000 p_t_max=0.1836 p_t_ent=2.9876 p_s_max=0.1349 p_s_ent=3.4265
+2026-02-09 16:29:37 | STEP 0 200 LOSS 0.293767
+2026-02-09 16:29:37 | DBG 0 200 base_rms=0.598164 delta_rms=0.001313 delta/base=0.002195 g_adapter=0.006269 g_proj=0.157820 adapter_scale=1.001154 lr_adapter=5e-05 lr_proj=1e-05
+2026-02-09 16:29:37 | AFF 0 200 tau=0.07 candidates=3721 anchors=256 (req a=256 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8522/0.1112/1.0000 sim_t(mean/std/max)=0.7807/0.1584/1.0000 p_t_max=0.1554 p_t_ent=3.1079 p_s_max=0.1211 p_s_ent=3.4416
+2026-02-09 16:30:47 | STEP 0 250 LOSS 0.321457
+2026-02-09 16:30:47 | DBG 0 250 base_rms=0.622328 delta_rms=0.001694 delta/base=0.002722 g_adapter=0.003214 g_proj=0.293818 adapter_scale=1.001570 lr_adapter=5e-05 lr_proj=1e-05
+2026-02-09 16:30:47 | AFF 0 250 tau=0.07 candidates=3721 anchors=256 (req a=256 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8258/0.1266/1.0000 sim_t(mean/std/max)=0.7713/0.1588/1.0000 p_t_max=0.1656 p_t_ent=3.0521 p_s_max=0.1498 p_s_ent=3.3008
+2026-02-09 16:31:57 | STEP 0 300 LOSS 0.340158
+2026-02-09 16:31:57 | DBG 0 300 base_rms=0.572182 delta_rms=0.001730 delta/base=0.003023 g_adapter=0.009938 g_proj=0.159584 adapter_scale=1.001384 lr_adapter=5e-05 lr_proj=1e-05
+2026-02-09 16:31:57 | AFF 0 300 tau=0.07 candidates=3721 anchors=256 (req a=256 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8026/0.1278/1.0000 sim_t(mean/std/max)=0.7628/0.1545/1.0000 p_t_max=0.1813 p_t_ent=2.9909 p_s_max=0.1775 p_s_ent=3.2127
+2026-02-09 16:33:06 | STEP 0 350 LOSS 0.276144
+2026-02-09 16:33:06 | DBG 0 350 base_rms=0.599719 delta_rms=0.001628 delta/base=0.002714 g_adapter=0.022181 g_proj=0.303689 adapter_scale=1.000891 lr_adapter=5e-05 lr_proj=1e-05
+2026-02-09 16:33:06 | AFF 0 350 tau=0.07 candidates=3721 anchors=256 (req a=256 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8378/0.1179/1.0000 sim_t(mean/std/max)=0.7905/0.1464/1.0000 p_t_max=0.1561 p_t_ent=3.1401 p_s_max=0.1356 p_s_ent=3.3779
+2026-02-09 16:34:14 | Training done. elapsed_sec=565.5
+2026-02-09 16:34:14 | Saved checkpoint: /home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5/adapter.pth
+2026-02-09 16:40:23 | Args: acdc_root=/mnt/d/ACDC conditions=['fog', 'night', 'rain', 'snow'] resize=1072 crop_size=1072 segformer_model=nvidia/segformer-b5-finetuned-cityscapes-1024-1024 dino_model=facebook/dinov3-vitl16-pretrain-lvd1689m num_classes=19 adapter_hidden_ratio=1.0 adapter_scale=1.0 epochs=1 batch_size=4 workers=4 lr=0.0001 lr_proj=None proj_warmup_steps=50 lr_proj_after_warmup=1e-05 proj_type=mlp proj_mlp_hidden=256 weight_decay=0.01 weight_decay_proj=None max_grad_norm=1.0 max_grad_norm_proj=None amp=True seed=1 grad_accum_steps=4 affinity_k=7 affinity_tau=0.07 lambda_aff=1.0 affinity_anchors=128 affinity_candidates=4096 affinity_kcenter_top_m=1500 affinity_per_image=1 wandb=False wandb_project=SELO wandb_entity= wandb_group= wandb_run_name= output_dir=/home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5 log_every=50 diag_anchor_every=100 diag_anchor_dir= diag_anchor_max=40 diag_anchor_per_call=1
+2026-02-09 16:40:23 | [diag] save train anchors every=100 per_call=1 max=40 dir=/home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5/diag_train_anchors
+2026-02-09 16:40:25 | Using batch_size=4, grad_accum_steps=4, effective_batch=16
+2026-02-09 16:40:25 | [sched] proj_warmup_steps=50 는 grad_accum_steps=4 의 배수가 아니어서 52 로 올림(phase 전환 시 누적 grad 혼합 방지)
+2026-02-09 16:40:25 | [phase] warmup_proj | lr_adapter=0.0 lr_proj=0.0001 | trainable=stage3_proj.proj.0.weight, stage3_proj.proj.0.bias, stage3_proj.proj.2.ln.weight, stage3_proj.proj.2.ln.bias, stage3_proj.proj.3.weight, stage3_proj.proj.3.bias
+2026-02-09 16:40:25 | [sched] warmup_steps=50 (effective=52) 이후 adapter 학습 + proj lr=1e-05
+2026-02-09 16:40:32 | Stage3 shape: (4, 320, 67, 67)
+2026-02-09 16:40:32 | Alignment: input=1072x1072, stage3=torch.Size([67, 67]) dino=67x67
+2026-02-09 16:40:32 | STEP 0 0 LOSS 1.489824
+2026-02-09 16:40:32 | DBG 0 0 base_rms=0.646216 delta_rms=0.000000 delta/base=0.000000 g_adapter=0.000000 g_proj=1.471575 adapter_scale=1.000000 lr_adapter=0.0 lr_proj=0.0001
+2026-02-09 16:40:32 | AFF 0 0 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.5202/0.2419/1.0000 sim_t(mean/std/max)=0.7734/0.1494/1.0000 p_t_max=0.1722 p_t_ent=3.0436 p_s_max=0.5517 p_s_ent=1.6467
+2026-02-09 16:41:36 | STEP 0 50 LOSS 0.369714
+2026-02-09 16:41:36 | DBG 0 50 base_rms=0.667883 delta_rms=0.000000 delta/base=0.000000 g_adapter=0.000000 g_proj=0.549460 adapter_scale=1.000000 lr_adapter=0.0 lr_proj=0.0001
+2026-02-09 16:41:36 | AFF 0 50 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8423/0.1213/1.0000 sim_t(mean/std/max)=0.7717/0.1500/1.0000 p_t_max=0.1782 p_t_ent=3.0417 p_s_max=0.1425 p_s_ent=3.3849
+2026-02-09 16:41:37 | [phase] train_adapter | lr_adapter=0.0001 lr_proj=1e-05 | trainable=stage3_adapter.scale, stage3_adapter.conv1.weight, stage3_adapter.conv1.bias, stage3_adapter.dwconv.weight, stage3_adapter.conv2.weight, stage3_adapter.conv2.bias, stage3_proj.proj.0.weight, stage3_proj.proj.0.bias, stage3_proj.proj.2.ln.weight, stage3_proj.proj.2.ln.bias, stage3_proj.proj.3.weight, stage3_proj.proj.3.bias
+2026-02-09 16:42:42 | STEP 0 100 LOSS 0.357550
+2026-02-09 16:42:42 | DBG 0 100 base_rms=0.619527 delta_rms=0.001362 delta/base=0.002199 g_adapter=0.005678 g_proj=0.217075 adapter_scale=1.000990 lr_adapter=0.0001 lr_proj=1e-05
+2026-02-09 16:42:42 | AFF 0 100 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8616/0.1137/1.0000 sim_t(mean/std/max)=0.7838/0.1520/1.0000 p_t_max=0.1595 p_t_ent=3.1039 p_s_max=0.1173 p_s_ent=3.4762
+2026-02-09 16:43:46 | STEP 0 150 LOSS 0.372651
+2026-02-09 16:43:46 | DBG 0 150 base_rms=0.681351 delta_rms=0.002551 delta/base=0.003744 g_adapter=0.004681 g_proj=0.390039 adapter_scale=1.002264 lr_adapter=0.0001 lr_proj=1e-05
+2026-02-09 16:43:46 | AFF 0 150 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8400/0.1048/1.0000 sim_t(mean/std/max)=0.7677/0.1477/1.0000 p_t_max=0.1781 p_t_ent=3.0227 p_s_max=0.1401 p_s_ent=3.4052
+2026-02-09 16:44:49 | STEP 0 200 LOSS 0.284957
+2026-02-09 16:44:49 | DBG 0 200 base_rms=0.598162 delta_rms=0.003725 delta/base=0.006227 g_adapter=0.003463 g_proj=0.147847 adapter_scale=1.003354 lr_adapter=0.0001 lr_proj=1e-05
+2026-02-09 16:44:49 | AFF 0 200 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8463/0.1190/1.0000 sim_t(mean/std/max)=0.7860/0.1563/1.0000 p_t_max=0.1516 p_t_ent=3.1294 p_s_max=0.1268 p_s_ent=3.4106
+2026-02-09 16:45:53 | STEP 0 250 LOSS 0.314382
+2026-02-09 16:45:53 | DBG 0 250 base_rms=0.622329 delta_rms=0.004217 delta/base=0.006776 g_adapter=0.008214 g_proj=0.290788 adapter_scale=1.003508 lr_adapter=0.0001 lr_proj=1e-05
+2026-02-09 16:45:53 | AFF 0 250 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8254/0.1282/1.0000 sim_t(mean/std/max)=0.7756/0.1563/1.0000 p_t_max=0.1642 p_t_ent=3.0676 p_s_max=0.1480 p_s_ent=3.2961
+2026-02-09 16:46:58 | STEP 0 300 LOSS 0.336009
+2026-02-09 16:46:58 | DBG 0 300 base_rms=0.572183 delta_rms=0.004141 delta/base=0.007236 g_adapter=0.006861 g_proj=0.155934 adapter_scale=1.002840 lr_adapter=0.0001 lr_proj=1e-05
+2026-02-09 16:46:58 | AFF 0 300 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8099/0.1279/1.0000 sim_t(mean/std/max)=0.7672/0.1522/1.0000 p_t_max=0.1800 p_t_ent=3.0069 p_s_max=0.1644 p_s_ent=3.2583
+2026-02-09 16:47:59 | STEP 0 350 LOSS 0.261827
+2026-02-09 16:47:59 | DBG 0 350 base_rms=0.599718 delta_rms=0.004370 delta/base=0.007287 g_adapter=0.017176 g_proj=0.278255 adapter_scale=1.002348 lr_adapter=0.0001 lr_proj=1e-05
+2026-02-09 16:47:59 | AFF 0 350 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8425/0.1185/1.0000 sim_t(mean/std/max)=0.7940/0.1450/1.0000 p_t_max=0.1586 p_t_ent=3.1480 p_s_max=0.1303 p_s_ent=3.3948
+2026-02-09 16:49:01 | Training done. elapsed_sec=516.0
+2026-02-09 16:49:01 | Saved checkpoint: /home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5/adapter.pth
+2026-02-09 16:55:49 | Args: acdc_root=/mnt/d/ACDC conditions=['fog', 'night', 'rain', 'snow'] resize=1072 crop_size=1072 segformer_model=nvidia/segformer-b5-finetuned-cityscapes-1024-1024 dino_model=facebook/dinov3-vitl16-pretrain-lvd1689m num_classes=19 adapter_hidden_ratio=1.0 adapter_scale=1.0 epochs=1 batch_size=4 workers=4 lr=0.001 lr_proj=None proj_warmup_steps=50 lr_proj_after_warmup=1e-05 proj_type=mlp proj_mlp_hidden=256 weight_decay=0.01 weight_decay_proj=None max_grad_norm=1.0 max_grad_norm_proj=None amp=True seed=1 grad_accum_steps=4 affinity_k=7 affinity_tau=0.07 lambda_aff=1.0 affinity_anchors=128 affinity_candidates=4096 affinity_kcenter_top_m=1500 affinity_per_image=1 wandb=False wandb_project=SELO wandb_entity= wandb_group= wandb_run_name= output_dir=/home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5 log_every=50 diag_anchor_every=1 diag_anchor_dir= diag_anchor_max=0 diag_anchor_per_call=1
+2026-02-09 16:55:49 | [diag] save train anchors every=1 per_call=1 max=inf dir=/home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5/diag_train_anchors
+2026-02-09 16:55:50 | Using batch_size=4, grad_accum_steps=4, effective_batch=16
+2026-02-09 16:55:50 | [sched] proj_warmup_steps=50 는 grad_accum_steps=4 의 배수가 아니어서 52 로 올림(phase 전환 시 누적 grad 혼합 방지)
+2026-02-09 16:55:50 | [phase] warmup_proj | lr_adapter=0.0 lr_proj=0.001 | trainable=stage3_proj.proj.0.weight, stage3_proj.proj.0.bias, stage3_proj.proj.2.ln.weight, stage3_proj.proj.2.ln.bias, stage3_proj.proj.3.weight, stage3_proj.proj.3.bias
+2026-02-09 16:55:50 | [sched] warmup_steps=50 (effective=52) 이후 adapter 학습 + proj lr=1e-05
+2026-02-09 16:55:57 | Stage3 shape: (4, 320, 67, 67)
+2026-02-09 16:55:57 | Alignment: input=1072x1072, stage3=torch.Size([67, 67]) dino=67x67
+2026-02-09 16:55:57 | STEP 0 0 LOSS 1.489810
+2026-02-09 16:55:57 | DBG 0 0 base_rms=0.646220 delta_rms=0.000000 delta/base=0.000000 g_adapter=0.000000 g_proj=1.471589 adapter_scale(mean)=0.000000 adapter_scale(|max|)=0.000000 lr_adapter=0.0 lr_proj=0.001
+2026-02-09 16:55:57 | AFF 0 0 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.5202/0.2419/1.0000 sim_t(mean/std/max)=0.7734/0.1494/1.0000 p_t_max=0.1722 p_t_ent=3.0436 p_s_max=0.5517 p_s_ent=1.6467
+2026-02-09 16:57:11 | STEP 0 50 LOSS 0.320930
+2026-02-09 16:57:11 | DBG 0 50 base_rms=0.667887 delta_rms=0.000000 delta/base=0.000000 g_adapter=0.000000 g_proj=0.233973 adapter_scale(mean)=0.000000 adapter_scale(|max|)=0.000000 lr_adapter=0.0 lr_proj=0.001
+2026-02-09 16:57:11 | AFF 0 50 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8454/0.1220/1.0000 sim_t(mean/std/max)=0.7717/0.1500/1.0000 p_t_max=0.1782 p_t_ent=3.0417 p_s_max=0.1074 p_s_ent=3.4227
+2026-02-09 16:57:13 | [phase] train_adapter | lr_adapter=0.001 lr_proj=1e-05 | trainable=stage3_adapter.scale, stage3_adapter.conv1.weight, stage3_adapter.conv1.bias, stage3_adapter.dwconv.weight, stage3_adapter.conv2.weight, stage3_adapter.conv2.bias, stage3_proj.proj.0.weight, stage3_proj.proj.0.bias, stage3_proj.proj.2.ln.weight, stage3_proj.proj.2.ln.bias, stage3_proj.proj.3.weight, stage3_proj.proj.3.bias
+2026-02-09 16:58:25 | STEP 0 100 LOSS 0.284766
+2026-02-09 16:58:25 | DBG 0 100 base_rms=0.619534 delta_rms=0.000000 delta/base=0.000000 g_adapter=0.000000 g_proj=0.095806 adapter_scale(mean)=0.000000 adapter_scale(|max|)=0.000000 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 16:58:25 | AFF 0 100 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8455/0.1285/1.0000 sim_t(mean/std/max)=0.7838/0.1520/1.0000 p_t_max=0.1595 p_t_ent=3.1039 p_s_max=0.1077 p_s_ent=3.4089
+2026-02-09 16:59:38 | STEP 0 150 LOSS 0.334958
+2026-02-09 16:59:38 | DBG 0 150 base_rms=0.681347 delta_rms=0.000000 delta/base=0.000000 g_adapter=0.000000 g_proj=0.180098 adapter_scale(mean)=0.000000 adapter_scale(|max|)=0.000000 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 16:59:38 | AFF 0 150 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8309/0.1230/1.0000 sim_t(mean/std/max)=0.7677/0.1477/1.0000 p_t_max=0.1781 p_t_ent=3.0227 p_s_max=0.1221 p_s_ent=3.3694
+2026-02-09 17:00:53 | STEP 0 200 LOSS 0.250998
+2026-02-09 17:00:53 | DBG 0 200 base_rms=0.598162 delta_rms=0.000000 delta/base=0.000000 g_adapter=0.000000 g_proj=0.084246 adapter_scale(mean)=0.000000 adapter_scale(|max|)=0.000000 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:00:53 | AFF 0 200 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8464/0.1259/1.0000 sim_t(mean/std/max)=0.7860/0.1563/1.0000 p_t_max=0.1516 p_t_ent=3.1294 p_s_max=0.1050 p_s_ent=3.4246
+2026-02-09 17:02:06 | STEP 0 250 LOSS 0.262349
+2026-02-09 17:02:06 | DBG 0 250 base_rms=0.622333 delta_rms=0.000000 delta/base=0.000000 g_adapter=0.000000 g_proj=0.151977 adapter_scale(mean)=0.000000 adapter_scale(|max|)=0.000000 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:02:06 | AFF 0 250 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8236/0.1379/1.0000 sim_t(mean/std/max)=0.7756/0.1563/1.0000 p_t_max=0.1642 p_t_ent=3.0676 p_s_max=0.1245 p_s_ent=3.3069
+2026-02-09 17:03:18 | STEP 0 300 LOSS 0.302060
+2026-02-09 17:03:18 | DBG 0 300 base_rms=0.572182 delta_rms=0.000000 delta/base=0.000000 g_adapter=0.000000 g_proj=0.082637 adapter_scale(mean)=0.000000 adapter_scale(|max|)=0.000000 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:03:18 | AFF 0 300 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8147/0.1386/1.0000 sim_t(mean/std/max)=0.7672/0.1522/1.0000 p_t_max=0.1800 p_t_ent=3.0069 p_s_max=0.1368 p_s_ent=3.2925
+2026-02-09 17:10:39 | Args: acdc_root=/mnt/d/ACDC conditions=['fog', 'night', 'rain', 'snow'] resize=1072 crop_size=1072 segformer_model=nvidia/segformer-b5-finetuned-cityscapes-1024-1024 dino_model=facebook/dinov3-vitl16-pretrain-lvd1689m num_classes=19 adapter_hidden_ratio=1.0 adapter_scale=1.0 epochs=1 batch_size=4 workers=4 lr=0.001 lr_proj=None proj_warmup_steps=50 lr_proj_after_warmup=1e-05 proj_type=mlp proj_mlp_hidden=256 weight_decay=0.01 weight_decay_proj=None max_grad_norm=1.0 max_grad_norm_proj=None amp=True seed=1 grad_accum_steps=4 affinity_k=7 affinity_tau=0.07 lambda_aff=1.0 affinity_anchors=128 affinity_candidates=4096 affinity_kcenter_top_m=1500 affinity_per_image=1 wandb=False wandb_project=SELO wandb_entity= wandb_group= wandb_run_name= output_dir=/home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5 log_every=50 diag_anchor_every=1 diag_anchor_dir= diag_anchor_max=0 diag_anchor_per_call=1
+2026-02-09 17:10:39 | [diag] save train anchors every=1 per_call=1 max=inf dir=/home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5/diag_train_anchors
+2026-02-09 17:10:42 | Using batch_size=4, grad_accum_steps=4, effective_batch=16
+2026-02-09 17:10:42 | [sched] proj_warmup_steps=50 는 grad_accum_steps=4 의 배수가 아니어서 52 로 올림(phase 전환 시 누적 grad 혼합 방지)
+2026-02-09 17:10:42 | [phase] warmup_proj | lr_adapter=0.0 lr_proj=0.001 | trainable=stage3_proj.proj.0.weight, stage3_proj.proj.0.bias, stage3_proj.proj.2.ln.weight, stage3_proj.proj.2.ln.bias, stage3_proj.proj.3.weight, stage3_proj.proj.3.bias
+2026-02-09 17:10:42 | [sched] warmup_steps=50 (effective=52) 이후 adapter 학습 + proj lr=1e-05
+2026-02-09 17:10:48 | Stage3 shape: (4, 320, 67, 67)
+2026-02-09 17:10:48 | Alignment: input=1072x1072, stage3=torch.Size([67, 67]) dino=67x67
+2026-02-09 17:10:48 | STEP 0 0 LOSS 1.489814
+2026-02-09 17:10:48 | DBG 0 0 base_rms=0.646216 delta_rms=0.000000 delta/base=0.000000 g_adapter=0.000000 g_proj=1.471612 adapter_scale(mean)=1.000000 adapter_scale(|max|)=1.000000 lr_adapter=0.0 lr_proj=0.001
+2026-02-09 17:10:48 | AFF 0 0 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.5202/0.2419/1.0000 sim_t(mean/std/max)=0.7734/0.1494/1.0000 p_t_max=0.1722 p_t_ent=3.0436 p_s_max=0.5517 p_s_ent=1.6467
+2026-02-09 17:12:00 | STEP 0 50 LOSS 0.320921
+2026-02-09 17:12:00 | DBG 0 50 base_rms=0.667880 delta_rms=0.000000 delta/base=0.000000 g_adapter=0.000000 g_proj=0.233972 adapter_scale(mean)=1.000000 adapter_scale(|max|)=1.000000 lr_adapter=0.0 lr_proj=0.001
+2026-02-09 17:12:00 | AFF 0 50 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8454/0.1220/1.0000 sim_t(mean/std/max)=0.7717/0.1500/1.0000 p_t_max=0.1782 p_t_ent=3.0417 p_s_max=0.1074 p_s_ent=3.4226
+2026-02-09 17:12:01 | [phase] train_adapter | lr_adapter=0.001 lr_proj=1e-05 | trainable=stage3_adapter.scale, stage3_adapter.conv1.weight, stage3_adapter.conv1.bias, stage3_adapter.dwconv.weight, stage3_adapter.conv2.weight, stage3_adapter.conv2.bias, stage3_proj.proj.0.weight, stage3_proj.proj.0.bias, stage3_proj.proj.2.ln.weight, stage3_proj.proj.2.ln.bias, stage3_proj.proj.3.weight, stage3_proj.proj.3.bias
+2026-02-09 17:13:15 | STEP 0 100 LOSS 0.281892
+2026-02-09 17:13:15 | DBG 0 100 base_rms=0.619531 delta_rms=0.012151 delta/base=0.019614 g_adapter=0.005389 g_proj=0.091494 adapter_scale(mean)=1.005667 adapter_scale(|max|)=1.010004 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:13:15 | AFF 0 100 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8381/0.1320/1.0000 sim_t(mean/std/max)=0.7838/0.1520/1.0000 p_t_max=0.1595 p_t_ent=3.1039 p_s_max=0.1133 p_s_ent=3.3775
+2026-02-09 17:14:28 | STEP 0 150 LOSS 0.328969
+2026-02-09 17:14:28 | DBG 0 150 base_rms=0.681351 delta_rms=0.025142 delta/base=0.036901 g_adapter=0.016932 g_proj=0.173095 adapter_scale(mean)=1.013142 adapter_scale(|max|)=1.022274 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:14:28 | AFF 0 150 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8241/0.1247/1.0000 sim_t(mean/std/max)=0.7677/0.1477/1.0000 p_t_max=0.1781 p_t_ent=3.0227 p_s_max=0.1282 p_s_ent=3.3406
+2026-02-09 17:15:40 | STEP 0 200 LOSS 0.244859
+2026-02-09 17:15:40 | DBG 0 200 base_rms=0.598165 delta_rms=0.030771 delta/base=0.051442 g_adapter=0.011072 g_proj=0.079980 adapter_scale(mean)=1.015869 adapter_scale(|max|)=1.035395 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:15:40 | AFF 0 200 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8390/0.1312/1.0000 sim_t(mean/std/max)=0.7860/0.1563/1.0000 p_t_max=0.1516 p_t_ent=3.1294 p_s_max=0.1101 p_s_ent=3.3948
+2026-02-09 17:16:55 | STEP 0 250 LOSS 0.256273
+2026-02-09 17:16:55 | DBG 0 250 base_rms=0.622332 delta_rms=0.038427 delta/base=0.061747 g_adapter=0.016224 g_proj=0.143491 adapter_scale(mean)=1.017786 adapter_scale(|max|)=1.046001 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:16:55 | AFF 0 250 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8204/0.1372/1.0000 sim_t(mean/std/max)=0.7756/0.1563/1.0000 p_t_max=0.1642 p_t_ent=3.0676 p_s_max=0.1279 p_s_ent=3.2927
+2026-02-09 17:18:06 | STEP 0 300 LOSS 0.295305
+2026-02-09 17:18:06 | DBG 0 300 base_rms=0.572187 delta_rms=0.038804 delta/base=0.067817 g_adapter=0.009535 g_proj=0.086013 adapter_scale(mean)=1.021839 adapter_scale(|max|)=1.055684 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:18:06 | AFF 0 300 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8119/0.1371/1.0000 sim_t(mean/std/max)=0.7672/0.1522/1.0000 p_t_max=0.1800 p_t_ent=3.0069 p_s_max=0.1394 p_s_ent=3.2814
+2026-02-09 17:19:17 | STEP 0 350 LOSS 0.230210
+2026-02-09 17:19:17 | DBG 0 350 base_rms=0.599717 delta_rms=0.046097 delta/base=0.076865 g_adapter=0.017074 g_proj=0.149844 adapter_scale(mean)=1.026114 adapter_scale(|max|)=1.068615 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:19:17 | AFF 0 350 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8398/0.1302/1.0000 sim_t(mean/std/max)=0.7940/0.1450/1.0000 p_t_max=0.1586 p_t_ent=3.1480 p_s_max=0.1148 p_s_ent=3.3863
+2026-02-09 17:19:46 | Args: acdc_root=/mnt/d/ACDC conditions=['fog', 'night', 'rain', 'snow'] resize=1072 crop_size=1072 segformer_model=nvidia/segformer-b5-finetuned-cityscapes-1024-1024 dino_model=facebook/dinov3-vitl16-pretrain-lvd1689m num_classes=19 adapter_hidden_ratio=1.0 adapter_scale=1.0 epochs=5 batch_size=4 workers=4 lr=0.001 lr_proj=None proj_warmup_steps=50 lr_proj_after_warmup=1e-05 proj_type=mlp proj_mlp_hidden=256 weight_decay=0.01 weight_decay_proj=None max_grad_norm=1.0 max_grad_norm_proj=None amp=True seed=1 grad_accum_steps=4 affinity_k=7 affinity_tau=0.07 lambda_aff=1.0 affinity_anchors=128 affinity_candidates=4096 affinity_kcenter_top_m=1500 affinity_per_image=1 wandb=False wandb_project=SELO wandb_entity= wandb_group= wandb_run_name= output_dir=/home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5 log_every=50 diag_anchor_every=1 diag_anchor_dir= diag_anchor_max=0 diag_anchor_per_call=1
+2026-02-09 17:19:46 | [diag] save train anchors every=1 per_call=1 max=inf dir=/home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5/diag_train_anchors
+2026-02-09 17:19:52 | Using batch_size=4, grad_accum_steps=4, effective_batch=16
+2026-02-09 17:19:52 | [sched] proj_warmup_steps=50 는 grad_accum_steps=4 의 배수가 아니어서 52 로 올림(phase 전환 시 누적 grad 혼합 방지)
+2026-02-09 17:19:52 | [phase] warmup_proj | lr_adapter=0.0 lr_proj=0.001 | trainable=stage3_proj.proj.0.weight, stage3_proj.proj.0.bias, stage3_proj.proj.2.ln.weight, stage3_proj.proj.2.ln.bias, stage3_proj.proj.3.weight, stage3_proj.proj.3.bias
+2026-02-09 17:19:52 | [sched] warmup_steps=50 (effective=52) 이후 adapter 학습 + proj lr=1e-05
+2026-02-09 17:19:58 | Stage3 shape: (4, 320, 67, 67)
+2026-02-09 17:19:58 | Alignment: input=1072x1072, stage3=torch.Size([67, 67]) dino=67x67
+2026-02-09 17:19:58 | STEP 0 0 LOSS 1.489812
+2026-02-09 17:19:58 | DBG 0 0 base_rms=0.646220 delta_rms=0.000000 delta/base=0.000000 g_adapter=0.000000 g_proj=1.471593 adapter_scale(mean)=1.000000 adapter_scale(|max|)=1.000000 lr_adapter=0.0 lr_proj=0.001
+2026-02-09 17:19:58 | AFF 0 0 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.5202/0.2419/1.0000 sim_t(mean/std/max)=0.7734/0.1494/1.0000 p_t_max=0.1722 p_t_ent=3.0436 p_s_max=0.5517 p_s_ent=1.6467
+2026-02-09 17:21:10 | STEP 0 50 LOSS 0.320936
+2026-02-09 17:21:10 | DBG 0 50 base_rms=0.667880 delta_rms=0.000000 delta/base=0.000000 g_adapter=0.000000 g_proj=0.233966 adapter_scale(mean)=1.000000 adapter_scale(|max|)=1.000000 lr_adapter=0.0 lr_proj=0.001
+2026-02-09 17:21:10 | AFF 0 50 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8454/0.1220/1.0000 sim_t(mean/std/max)=0.7717/0.1500/1.0000 p_t_max=0.1782 p_t_ent=3.0417 p_s_max=0.1074 p_s_ent=3.4226
+2026-02-09 17:21:12 | [phase] train_adapter | lr_adapter=0.001 lr_proj=1e-05 | trainable=stage3_adapter.scale, stage3_adapter.conv1.weight, stage3_adapter.conv1.bias, stage3_adapter.dwconv.weight, stage3_adapter.conv2.weight, stage3_adapter.conv2.bias, stage3_proj.proj.0.weight, stage3_proj.proj.0.bias, stage3_proj.proj.2.ln.weight, stage3_proj.proj.2.ln.bias, stage3_proj.proj.3.weight, stage3_proj.proj.3.bias
+2026-02-09 17:22:26 | STEP 0 100 LOSS 0.281886
+2026-02-09 17:22:26 | DBG 0 100 base_rms=0.619530 delta_rms=0.012155 delta/base=0.019620 g_adapter=0.005391 g_proj=0.091476 adapter_scale(mean)=1.005669 adapter_scale(|max|)=1.010004 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:22:26 | AFF 0 100 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8381/0.1320/1.0000 sim_t(mean/std/max)=0.7838/0.1520/1.0000 p_t_max=0.1595 p_t_ent=3.1039 p_s_max=0.1133 p_s_ent=3.3775
+2026-02-09 17:23:38 | STEP 0 150 LOSS 0.328992
+2026-02-09 17:23:38 | DBG 0 150 base_rms=0.681349 delta_rms=0.025151 delta/base=0.036914 g_adapter=0.016936 g_proj=0.173117 adapter_scale(mean)=1.013148 adapter_scale(|max|)=1.022276 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:23:38 | AFF 0 150 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8241/0.1247/1.0000 sim_t(mean/std/max)=0.7677/0.1477/1.0000 p_t_max=0.1781 p_t_ent=3.0227 p_s_max=0.1282 p_s_ent=3.3407
+2026-02-09 17:24:51 | STEP 0 200 LOSS 0.244855
+2026-02-09 17:24:51 | DBG 0 200 base_rms=0.598161 delta_rms=0.030788 delta/base=0.051471 g_adapter=0.011074 g_proj=0.079964 adapter_scale(mean)=1.015879 adapter_scale(|max|)=1.035391 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:24:51 | AFF 0 200 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8390/0.1312/1.0000 sim_t(mean/std/max)=0.7860/0.1563/1.0000 p_t_max=0.1516 p_t_ent=3.1294 p_s_max=0.1100 p_s_ent=3.3948
+2026-02-09 17:26:04 | STEP 0 250 LOSS 0.256265
+2026-02-09 17:26:04 | DBG 0 250 base_rms=0.622335 delta_rms=0.038446 delta/base=0.061777 g_adapter=0.016222 g_proj=0.143472 adapter_scale(mean)=1.017789 adapter_scale(|max|)=1.045995 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:26:04 | AFF 0 250 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8204/0.1372/1.0000 sim_t(mean/std/max)=0.7756/0.1563/1.0000 p_t_max=0.1642 p_t_ent=3.0676 p_s_max=0.1278 p_s_ent=3.2927
+2026-02-09 17:27:17 | STEP 0 300 LOSS 0.295324
+2026-02-09 17:27:17 | DBG 0 300 base_rms=0.572190 delta_rms=0.038828 delta/base=0.067858 g_adapter=0.009536 g_proj=0.086017 adapter_scale(mean)=1.021842 adapter_scale(|max|)=1.055626 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:27:17 | AFF 0 300 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8119/0.1370/1.0000 sim_t(mean/std/max)=0.7672/0.1522/1.0000 p_t_max=0.1800 p_t_ent=3.0069 p_s_max=0.1394 p_s_ent=3.2814
+2026-02-09 17:28:29 | STEP 0 350 LOSS 0.230210
+2026-02-09 17:28:29 | DBG 0 350 base_rms=0.599717 delta_rms=0.046127 delta/base=0.076915 g_adapter=0.017072 g_proj=0.149860 adapter_scale(mean)=1.026116 adapter_scale(|max|)=1.068554 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:28:29 | AFF 0 350 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8398/0.1302/1.0000 sim_t(mean/std/max)=0.7940/0.1450/1.0000 p_t_max=0.1586 p_t_ent=3.1480 p_s_max=0.1148 p_s_ent=3.3863
+2026-02-09 17:29:43 | STEP 1 0 LOSS 0.217268
+2026-02-09 17:29:43 | DBG 1 0 base_rms=0.625028 delta_rms=0.048745 delta/base=0.077988 g_adapter=0.011529 g_proj=0.075576 adapter_scale(mean)=1.030596 adapter_scale(|max|)=1.081224 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:29:43 | AFF 1 0 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8443/0.1311/1.0000 sim_t(mean/std/max)=0.8082/0.1503/1.0000 p_t_max=0.1392 p_t_ent=3.1986 p_s_max=0.1065 p_s_ent=3.3948
+2026-02-09 17:30:55 | STEP 1 50 LOSS 0.299389
+2026-02-09 17:30:55 | DBG 1 50 base_rms=0.589711 delta_rms=0.054365 delta/base=0.092190 g_adapter=0.024500 g_proj=0.160996 adapter_scale(mean)=1.035159 adapter_scale(|max|)=1.094979 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:30:55 | AFF 1 50 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8138/0.1370/1.0000 sim_t(mean/std/max)=0.7618/0.1574/1.0000 p_t_max=0.1855 p_t_ent=2.9751 p_s_max=0.1389 p_s_ent=3.2724
+2026-02-09 17:32:09 | STEP 1 100 LOSS 0.244944
+2026-02-09 17:32:09 | DBG 1 100 base_rms=0.581617 delta_rms=0.057477 delta/base=0.098822 g_adapter=0.011286 g_proj=0.071775 adapter_scale(mean)=1.040817 adapter_scale(|max|)=1.108409 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:32:09 | AFF 1 100 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8366/0.1318/1.0000 sim_t(mean/std/max)=0.7954/0.1461/1.0000 p_t_max=0.1477 p_t_ent=3.1488 p_s_max=0.1132 p_s_ent=3.3829
+2026-02-09 17:33:25 | STEP 1 150 LOSS 0.245821
+2026-02-09 17:33:25 | DBG 1 150 base_rms=0.596537 delta_rms=0.064808 delta/base=0.108641 g_adapter=0.025705 g_proj=0.140971 adapter_scale(mean)=1.045184 adapter_scale(|max|)=1.119764 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:33:25 | AFF 1 150 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8230/0.1300/1.0000 sim_t(mean/std/max)=0.7880/0.1438/1.0000 p_t_max=0.1515 p_t_ent=3.1205 p_s_max=0.1277 p_s_ent=3.3136
+2026-02-09 17:34:38 | STEP 1 200 LOSS 0.251789
+2026-02-09 17:34:38 | DBG 1 200 base_rms=0.632113 delta_rms=0.064062 delta/base=0.101345 g_adapter=0.031544 g_proj=0.110049 adapter_scale(mean)=1.050691 adapter_scale(|max|)=1.134647 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:34:38 | AFF 1 200 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8039/0.1355/1.0000 sim_t(mean/std/max)=0.7694/0.1585/1.0000 p_t_max=0.1683 p_t_ent=3.0467 p_s_max=0.1413 p_s_ent=3.2360
+2026-02-09 17:35:51 | STEP 1 250 LOSS 0.254640
+2026-02-09 17:35:51 | DBG 1 250 base_rms=0.641502 delta_rms=0.067260 delta/base=0.104848 g_adapter=0.031817 g_proj=0.144107 adapter_scale(mean)=1.055273 adapter_scale(|max|)=1.148118 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:35:51 | AFF 1 250 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8282/0.1389/1.0000 sim_t(mean/std/max)=0.7863/0.1601/1.0000 p_t_max=0.1548 p_t_ent=3.0997 p_s_max=0.1194 p_s_ent=3.3304
+2026-02-09 17:37:04 | STEP 1 300 LOSS 0.255573
+2026-02-09 17:37:04 | DBG 1 300 base_rms=0.598017 delta_rms=0.064063 delta/base=0.107125 g_adapter=0.016531 g_proj=0.078800 adapter_scale(mean)=1.059226 adapter_scale(|max|)=1.159039 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:37:04 | AFF 1 300 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8175/0.1342/1.0000 sim_t(mean/std/max)=0.7685/0.1595/1.0000 p_t_max=0.1688 p_t_ent=3.0462 p_s_max=0.1307 p_s_ent=3.3019
+2026-02-09 17:38:17 | STEP 1 350 LOSS 0.313216
+2026-02-09 17:38:17 | DBG 1 350 base_rms=0.666534 delta_rms=0.080491 delta/base=0.120760 g_adapter=0.061395 g_proj=0.171615 adapter_scale(mean)=1.061792 adapter_scale(|max|)=1.165122 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:38:17 | AFF 1 350 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8361/0.1113/1.0000 sim_t(mean/std/max)=0.7650/0.1550/1.0000 p_t_max=0.1799 p_t_ent=3.0092 p_s_max=0.1173 p_s_ent=3.3922
+2026-02-09 17:39:30 | STEP 2 0 LOSS 0.263887
+2026-02-09 17:39:30 | DBG 2 0 base_rms=0.695419 delta_rms=0.084700 delta/base=0.121797 g_adapter=0.019679 g_proj=0.078489 adapter_scale(mean)=1.066175 adapter_scale(|max|)=1.173300 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:39:30 | AFF 2 0 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8082/0.1314/1.0000 sim_t(mean/std/max)=0.7622/0.1647/1.0000 p_t_max=0.1670 p_t_ent=3.0232 p_s_max=0.1383 p_s_ent=3.2631
+2026-02-09 17:40:42 | STEP 2 50 LOSS 0.265337
+2026-02-09 17:40:42 | DBG 2 50 base_rms=0.635054 delta_rms=0.077765 delta/base=0.122454 g_adapter=0.036360 g_proj=0.141819 adapter_scale(mean)=1.068974 adapter_scale(|max|)=1.178276 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:40:42 | AFF 2 50 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8291/0.1259/1.0000 sim_t(mean/std/max)=0.7818/0.1492/1.0000 p_t_max=0.1695 p_t_ent=3.0821 p_s_max=0.1294 p_s_ent=3.3362
+2026-02-09 17:41:55 | STEP 2 100 LOSS 0.281173
+2026-02-09 17:41:55 | DBG 2 100 base_rms=0.636572 delta_rms=0.083573 delta/base=0.131286 g_adapter=0.058256 g_proj=0.114144 adapter_scale(mean)=1.072221 adapter_scale(|max|)=1.184944 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:41:55 | AFF 2 100 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8318/0.1116/1.0000 sim_t(mean/std/max)=0.7670/0.1480/1.0000 p_t_max=0.1764 p_t_ent=3.0027 p_s_max=0.1261 p_s_ent=3.3592
+2026-02-09 17:43:08 | STEP 2 150 LOSS 0.267080
+2026-02-09 17:43:08 | DBG 2 150 base_rms=0.661286 delta_rms=0.077514 delta/base=0.117217 g_adapter=0.038841 g_proj=0.139058 adapter_scale(mean)=1.074507 adapter_scale(|max|)=1.191332 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:43:08 | AFF 2 150 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8185/0.1317/1.0000 sim_t(mean/std/max)=0.7674/0.1661/1.0000 p_t_max=0.1769 p_t_ent=3.0152 p_s_max=0.1353 p_s_ent=3.2952
+2026-02-09 17:44:20 | STEP 2 200 LOSS 0.289409
+2026-02-09 17:44:20 | DBG 2 200 base_rms=0.638407 delta_rms=0.083327 delta/base=0.130524 g_adapter=0.016852 g_proj=0.075430 adapter_scale(mean)=1.076354 adapter_scale(|max|)=1.198496 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:44:20 | AFF 2 200 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8224/0.1251/1.0000 sim_t(mean/std/max)=0.7688/0.1527/1.0000 p_t_max=0.1777 p_t_ent=3.0214 p_s_max=0.1330 p_s_ent=3.3153
+2026-02-09 17:45:33 | STEP 2 250 LOSS 0.260058
+2026-02-09 17:45:33 | DBG 2 250 base_rms=0.593961 delta_rms=0.085609 delta/base=0.144132 g_adapter=0.055115 g_proj=0.157947 adapter_scale(mean)=1.078923 adapter_scale(|max|)=1.206399 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:45:33 | AFF 2 250 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8224/0.1238/1.0000 sim_t(mean/std/max)=0.7858/0.1364/1.0000 p_t_max=0.1567 p_t_ent=3.0997 p_s_max=0.1317 p_s_ent=3.3155
+2026-02-09 17:46:45 | STEP 2 300 LOSS 0.239574
+2026-02-09 17:46:45 | DBG 2 300 base_rms=0.620618 delta_rms=0.087370 delta/base=0.140778 g_adapter=0.046525 g_proj=0.100208 adapter_scale(mean)=1.080736 adapter_scale(|max|)=1.212891 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:46:45 | AFF 2 300 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8191/0.1263/1.0000 sim_t(mean/std/max)=0.7860/0.1501/1.0000 p_t_max=0.1588 p_t_ent=3.1034 p_s_max=0.1396 p_s_ent=3.2916
+2026-02-09 17:47:58 | STEP 2 350 LOSS 0.232447
+2026-02-09 17:47:58 | DBG 2 350 base_rms=0.644578 delta_rms=0.094742 delta/base=0.146984 g_adapter=0.026576 g_proj=0.124515 adapter_scale(mean)=1.082197 adapter_scale(|max|)=1.218442 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:47:58 | AFF 2 350 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8322/0.1157/1.0000 sim_t(mean/std/max)=0.7863/0.1498/1.0000 p_t_max=0.1569 p_t_ent=3.1197 p_s_max=0.1212 p_s_ent=3.3650
+2026-02-09 17:49:11 | STEP 3 0 LOSS 0.300043
+2026-02-09 17:49:11 | DBG 3 0 base_rms=0.677137 delta_rms=0.091383 delta/base=0.134955 g_adapter=0.021523 g_proj=0.090711 adapter_scale(mean)=1.083504 adapter_scale(|max|)=1.221308 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:49:11 | AFF 3 0 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8140/0.1173/1.0000 sim_t(mean/std/max)=0.7662/0.1468/1.0000 p_t_max=0.1828 p_t_ent=3.0111 p_s_max=0.1474 p_s_ent=3.2935
+2026-02-09 17:50:27 | STEP 3 50 LOSS 0.235020
+2026-02-09 17:50:27 | DBG 3 50 base_rms=0.658994 delta_rms=0.087226 delta/base=0.132363 g_adapter=0.035751 g_proj=0.131093 adapter_scale(mean)=1.086226 adapter_scale(|max|)=1.227849 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:50:27 | AFF 3 50 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8097/0.1364/1.0000 sim_t(mean/std/max)=0.7702/0.1627/1.0000 p_t_max=0.1679 p_t_ent=3.0477 p_s_max=0.1439 p_s_ent=3.2654
+2026-02-09 17:51:40 | STEP 3 100 LOSS 0.185838
+2026-02-09 17:51:40 | DBG 3 100 base_rms=0.640643 delta_rms=0.093119 delta/base=0.145352 g_adapter=0.027860 g_proj=0.069796 adapter_scale(mean)=1.088934 adapter_scale(|max|)=1.230990 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:51:40 | AFF 3 100 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8427/0.1235/1.0000 sim_t(mean/std/max)=0.8147/0.1429/1.0000 p_t_max=0.1307 p_t_ent=3.2403 p_s_max=0.1094 p_s_ent=3.3852
+2026-02-09 17:52:53 | STEP 3 150 LOSS 0.251544
+2026-02-09 17:52:53 | DBG 3 150 base_rms=0.616664 delta_rms=0.083616 delta/base=0.135595 g_adapter=0.036759 g_proj=0.136252 adapter_scale(mean)=1.089945 adapter_scale(|max|)=1.235193 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:52:53 | AFF 3 150 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8137/0.1258/1.0000 sim_t(mean/std/max)=0.7637/0.1640/1.0000 p_t_max=0.1822 p_t_ent=2.9949 p_s_max=0.1434 p_s_ent=3.2583
+2026-02-09 17:54:02 | STEP 3 200 LOSS 0.206891
+2026-02-09 17:54:02 | DBG 3 200 base_rms=0.621783 delta_rms=0.085957 delta/base=0.138243 g_adapter=0.034591 g_proj=0.077424 adapter_scale(mean)=1.091898 adapter_scale(|max|)=1.243093 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:54:02 | AFF 3 200 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8271/0.1320/1.0000 sim_t(mean/std/max)=0.7963/0.1596/1.0000 p_t_max=0.1455 p_t_ent=3.1648 p_s_max=0.1284 p_s_ent=3.3288
+2026-02-09 17:55:15 | STEP 3 250 LOSS 0.239028
+2026-02-09 17:55:15 | DBG 3 250 base_rms=0.605621 delta_rms=0.089862 delta/base=0.148379 g_adapter=0.037267 g_proj=0.145689 adapter_scale(mean)=1.093231 adapter_scale(|max|)=1.248772 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:55:15 | AFF 3 250 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8286/0.1147/1.0000 sim_t(mean/std/max)=0.7817/0.1519/1.0000 p_t_max=0.1657 p_t_ent=3.0828 p_s_max=0.1272 p_s_ent=3.3408
+2026-02-09 17:56:28 | STEP 3 300 LOSS 0.294003
+2026-02-09 17:56:28 | DBG 3 300 base_rms=0.670163 delta_rms=0.097844 delta/base=0.146000 g_adapter=0.040134 g_proj=0.097174 adapter_scale(mean)=1.094912 adapter_scale(|max|)=1.255902 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:56:28 | AFF 3 300 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8140/0.1142/1.0000 sim_t(mean/std/max)=0.7597/0.1481/1.0000 p_t_max=0.1873 p_t_ent=2.9689 p_s_max=0.1435 p_s_ent=3.2927
+2026-02-09 17:57:45 | STEP 3 350 LOSS 0.229320
+2026-02-09 17:57:45 | DBG 3 350 base_rms=0.600960 delta_rms=0.100880 delta/base=0.167864 g_adapter=0.081424 g_proj=0.171441 adapter_scale(mean)=1.096391 adapter_scale(|max|)=1.261352 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:57:45 | AFF 3 350 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8321/0.1125/1.0000 sim_t(mean/std/max)=0.7925/0.1494/1.0000 p_t_max=0.1522 p_t_ent=3.1484 p_s_max=0.1268 p_s_ent=3.3585
+2026-02-09 17:59:01 | STEP 4 0 LOSS 0.214517
+2026-02-09 17:59:01 | DBG 4 0 base_rms=0.663861 delta_rms=0.100478 delta/base=0.151354 g_adapter=0.018355 g_proj=0.074397 adapter_scale(mean)=1.098734 adapter_scale(|max|)=1.269904 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 17:59:01 | AFF 4 0 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8246/0.1292/1.0000 sim_t(mean/std/max)=0.7856/0.1590/1.0000 p_t_max=0.1517 p_t_ent=3.1144 p_s_max=0.1296 p_s_ent=3.3109
+2026-02-09 18:00:14 | STEP 4 50 LOSS 0.230671
+2026-02-09 18:00:14 | DBG 4 50 base_rms=0.599673 delta_rms=0.098522 delta/base=0.164293 g_adapter=0.037655 g_proj=0.132422 adapter_scale(mean)=1.098788 adapter_scale(|max|)=1.271647 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 18:00:14 | AFF 4 50 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8217/0.1207/1.0000 sim_t(mean/std/max)=0.7753/0.1602/1.0000 p_t_max=0.1616 p_t_ent=3.0727 p_s_max=0.1310 p_s_ent=3.3106
+2026-02-09 18:01:26 | STEP 4 100 LOSS 0.247037
+2026-02-09 18:01:26 | DBG 4 100 base_rms=0.647787 delta_rms=0.095897 delta/base=0.148037 g_adapter=0.026323 g_proj=0.079009 adapter_scale(mean)=1.099614 adapter_scale(|max|)=1.275421 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 18:01:26 | AFF 4 100 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8165/0.1295/1.0000 sim_t(mean/std/max)=0.7732/0.1661/1.0000 p_t_max=0.1672 p_t_ent=3.0594 p_s_max=0.1425 p_s_ent=3.2874
+2026-02-09 18:02:39 | STEP 4 150 LOSS 0.239016
+2026-02-09 18:02:39 | DBG 4 150 base_rms=0.608655 delta_rms=0.087920 delta/base=0.144450 g_adapter=0.044757 g_proj=0.146298 adapter_scale(mean)=1.100064 adapter_scale(|max|)=1.279484 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 18:02:39 | AFF 4 150 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8093/0.1263/1.0000 sim_t(mean/std/max)=0.7646/0.1623/1.0000 p_t_max=0.1742 p_t_ent=3.0247 p_s_max=0.1478 p_s_ent=3.2565
+2026-02-09 18:03:52 | STEP 4 200 LOSS 0.217050
+2026-02-09 18:03:52 | DBG 4 200 base_rms=0.627649 delta_rms=0.093390 delta/base=0.148793 g_adapter=0.028162 g_proj=0.071599 adapter_scale(mean)=1.101016 adapter_scale(|max|)=1.285048 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 18:03:52 | AFF 4 200 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8327/0.1229/1.0000 sim_t(mean/std/max)=0.7849/0.1603/1.0000 p_t_max=0.1601 p_t_ent=3.1113 p_s_max=0.1227 p_s_ent=3.3577
+2026-02-09 18:05:03 | STEP 4 250 LOSS 0.268760
+2026-02-09 18:05:03 | DBG 4 250 base_rms=0.654977 delta_rms=0.100374 delta/base=0.153248 g_adapter=0.038408 g_proj=0.131436 adapter_scale(mean)=1.101944 adapter_scale(|max|)=1.290611 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 18:05:03 | AFF 4 250 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8143/0.1181/1.0000 sim_t(mean/std/max)=0.7617/0.1570/1.0000 p_t_max=0.1780 p_t_ent=2.9862 p_s_max=0.1390 p_s_ent=3.2779
+2026-02-09 18:06:15 | STEP 4 300 LOSS 0.239191
+2026-02-09 18:06:15 | DBG 4 300 base_rms=0.642770 delta_rms=0.099766 delta/base=0.155213 g_adapter=0.033507 g_proj=0.074141 adapter_scale(mean)=1.101047 adapter_scale(|max|)=1.291136 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 18:06:15 | AFF 4 300 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8342/0.1102/1.0000 sim_t(mean/std/max)=0.7803/0.1543/1.0000 p_t_max=0.1557 p_t_ent=3.1115 p_s_max=0.1221 p_s_ent=3.3791
+2026-02-09 18:07:28 | STEP 4 350 LOSS 0.227552
+2026-02-09 18:07:28 | DBG 4 350 base_rms=0.633020 delta_rms=0.096516 delta/base=0.152469 g_adapter=0.034020 g_proj=0.127807 adapter_scale(mean)=1.101479 adapter_scale(|max|)=1.294160 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 18:07:28 | AFF 4 350 tau=0.07 candidates=3721 anchors=128 (req a=128 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8290/0.1195/1.0000 sim_t(mean/std/max)=0.7823/0.1504/1.0000 p_t_max=0.1641 p_t_ent=3.0689 p_s_max=0.1283 p_s_ent=3.3259
+2026-02-09 18:08:39 | Training done. elapsed_sec=2926.8
+2026-02-09 18:08:39 | Saved checkpoint: /home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5/adapter.pth
+2026-02-09 18:34:52 | Args: acdc_root=/mnt/d/ACDC conditions=['fog', 'night', 'rain', 'snow'] resize=1072 crop_size=1072 segformer_model=nvidia/segformer-b5-finetuned-cityscapes-1024-1024 dino_model=facebook/dinov3-vitl16-pretrain-lvd1689m num_classes=19 adapter_hidden_ratio=1.0 adapter_scale=1.0 epochs=1 batch_size=4 workers=4 lr=0.001 lr_proj=None proj_warmup_steps=50 lr_proj_after_warmup=1e-05 proj_type=mlp proj_mlp_hidden=256 weight_decay=0.01 weight_decay_proj=None max_grad_norm=1.0 max_grad_norm_proj=None amp=True seed=1 grad_accum_steps=4 affinity_k=7 affinity_tau=0.2 lambda_aff=1.0 affinity_anchors=256 affinity_candidates=4096 affinity_kcenter_top_m=1500 affinity_per_image=1 wandb=False wandb_project=SELO wandb_entity= wandb_group= wandb_run_name= output_dir=/home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5 log_every=50 diag_anchor_every=1 diag_anchor_dir= diag_anchor_max=0 diag_anchor_per_call=1
+2026-02-09 18:34:52 | [diag] save train anchors every=1 per_call=1 max=inf dir=/home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5/diag_train_anchors
+2026-02-09 18:34:54 | Using batch_size=4, grad_accum_steps=4, effective_batch=16
+2026-02-09 18:34:54 | [sched] proj_warmup_steps=50 는 grad_accum_steps=4 의 배수가 아니어서 52 로 올림(phase 전환 시 누적 grad 혼합 방지)
+2026-02-09 18:34:54 | [phase] warmup_proj | lr_adapter=0.0 lr_proj=0.001 | trainable=stage3_proj.proj.0.weight, stage3_proj.proj.0.bias, stage3_proj.proj.2.ln.weight, stage3_proj.proj.2.ln.bias, stage3_proj.proj.3.weight, stage3_proj.proj.3.bias
+2026-02-09 18:34:54 | [sched] warmup_steps=50 (effective=52) 이후 adapter 학습 + proj lr=1e-05
+2026-02-09 18:35:01 | Stage3 shape: (4, 320, 67, 67)
+2026-02-09 18:35:01 | Alignment: input=1072x1072, stage3=torch.Size([67, 67]) dino=67x67
+2026-02-09 18:35:01 | STEP 0 0 LOSS 0.262555
+2026-02-09 18:35:01 | DBG 0 0 base_rms=0.646220 delta_rms=0.000000 delta/base=0.000000 g_adapter=0.000000 g_proj=0.285853 adapter_scale(mean)=1.000000 adapter_scale(|max|)=1.000000 lr_adapter=0.0 lr_proj=0.001
+2026-02-09 18:35:01 | AFF 0 0 tau=0.2 candidates=3721 anchors=256 (req a=256 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.5119/0.2464/1.0000 sim_t(mean/std/max)=0.7693/0.1655/1.0000 p_t_max=0.0539 p_t_ent=3.6981 p_s_max=0.1516 p_s_ent=3.3440
+2026-02-09 18:36:18 | STEP 0 50 LOSS 0.080290
+2026-02-09 18:36:18 | DBG 0 50 base_rms=0.667887 delta_rms=0.000000 delta/base=0.000000 g_adapter=0.000000 g_proj=0.078990 adapter_scale(mean)=1.000000 adapter_scale(|max|)=1.000000 lr_adapter=0.0 lr_proj=0.001
+2026-02-09 18:36:18 | AFF 0 50 tau=0.2 candidates=3721 anchors=256 (req a=256 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8660/0.1235/1.0000 sim_t(mean/std/max)=0.7720/0.1645/1.0000 p_t_max=0.0540 p_t_ent=3.7038 p_s_max=0.0367 p_s_ent=3.8026
+2026-02-09 18:36:20 | [phase] train_adapter | lr_adapter=0.001 lr_proj=1e-05 | trainable=stage3_adapter.scale, stage3_adapter.conv1.weight, stage3_adapter.conv1.bias, stage3_adapter.dwconv.weight, stage3_adapter.conv2.weight, stage3_adapter.conv2.bias, stage3_proj.proj.0.weight, stage3_proj.proj.0.bias, stage3_proj.proj.2.ln.weight, stage3_proj.proj.2.ln.bias, stage3_proj.proj.3.weight, stage3_proj.proj.3.bias
+2026-02-09 18:37:40 | STEP 0 100 LOSS 0.074093
+2026-02-09 18:37:40 | DBG 0 100 base_rms=0.619534 delta_rms=0.016298 delta/base=0.026306 g_adapter=0.001661 g_proj=0.023355 adapter_scale(mean)=1.008254 adapter_scale(|max|)=1.010101 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 18:37:40 | AFF 0 100 tau=0.2 candidates=3721 anchors=256 (req a=256 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8486/0.1387/1.0000 sim_t(mean/std/max)=0.7818/0.1680/1.0000 p_t_max=0.0510 p_t_ent=3.7073 p_s_max=0.0393 p_s_ent=3.7820
+2026-02-09 18:39:03 | STEP 0 150 LOSS 0.081592
+2026-02-09 18:39:03 | DBG 0 150 base_rms=0.681347 delta_rms=0.032083 delta/base=0.047088 g_adapter=0.005736 g_proj=0.055129 adapter_scale(mean)=1.012800 adapter_scale(|max|)=1.022172 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 18:39:03 | AFF 0 150 tau=0.2 candidates=3721 anchors=256 (req a=256 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8269/0.1485/1.0000 sim_t(mean/std/max)=0.7639/0.1670/1.0000 p_t_max=0.0545 p_t_ent=3.6866 p_s_max=0.0422 p_s_ent=3.7600
+2026-02-09 18:40:22 | STEP 0 200 LOSS 0.065774
+2026-02-09 18:40:22 | DBG 0 200 base_rms=0.598162 delta_rms=0.032727 delta/base=0.054713 g_adapter=0.003957 g_proj=0.024398 adapter_scale(mean)=1.011820 adapter_scale(|max|)=1.033860 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 18:40:22 | AFF 0 200 tau=0.2 candidates=3721 anchors=256 (req a=256 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8564/0.1375/1.0000 sim_t(mean/std/max)=0.7845/0.1689/1.0000 p_t_max=0.0503 p_t_ent=3.7064 p_s_max=0.0377 p_s_ent=3.7857
+2026-02-09 18:41:41 | STEP 0 250 LOSS 0.064604
+2026-02-09 18:41:41 | DBG 0 250 base_rms=0.622333 delta_rms=0.040198 delta/base=0.064593 g_adapter=0.004067 g_proj=0.039933 adapter_scale(mean)=1.011681 adapter_scale(|max|)=1.044380 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 18:41:41 | AFF 0 250 tau=0.2 candidates=3721 anchors=256 (req a=256 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8324/0.1544/1.0000 sim_t(mean/std/max)=0.7769/0.1693/1.0000 p_t_max=0.0520 p_t_ent=3.6985 p_s_max=0.0417 p_s_ent=3.7603
+2026-02-09 18:43:07 | STEP 0 300 LOSS 0.074732
+2026-02-09 18:43:07 | DBG 0 300 base_rms=0.572182 delta_rms=0.039997 delta/base=0.069903 g_adapter=0.003098 g_proj=0.022189 adapter_scale(mean)=1.011919 adapter_scale(|max|)=1.056019 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 18:43:07 | AFF 0 300 tau=0.2 candidates=3721 anchors=256 (req a=256 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8161/0.1587/1.0000 sim_t(mean/std/max)=0.7660/0.1658/1.0000 p_t_max=0.0547 p_t_ent=3.6948 p_s_max=0.0444 p_s_ent=3.7559
+2026-02-09 18:44:27 | STEP 0 350 LOSS 0.055836
+2026-02-09 18:44:27 | DBG 0 350 base_rms=0.599716 delta_rms=0.051337 delta/base=0.085601 g_adapter=0.007969 g_proj=0.046830 adapter_scale(mean)=1.014199 adapter_scale(|max|)=1.066160 lr_adapter=0.001 lr_proj=1e-05
+2026-02-09 18:44:27 | AFF 0 350 tau=0.2 candidates=3721 anchors=256 (req a=256 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8502/0.1418/1.0000 sim_t(mean/std/max)=0.7942/0.1564/1.0000 p_t_max=0.0498 p_t_ent=3.7304 p_s_max=0.0391 p_s_ent=3.7818
+2026-02-09 18:45:46 | Training done. elapsed_sec=652.0
+2026-02-09 18:45:46 | Saved checkpoint: /home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5/adapter.pth

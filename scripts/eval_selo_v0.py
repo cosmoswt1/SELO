@@ -137,6 +137,9 @@ def parse_args():
     p.add_argument("--num_classes", type=int, default=19)
     p.add_argument("--adapter_hidden_ratio", type=float, default=0.25)
     p.add_argument("--adapter_scale", type=float, default=0.1)
+    p.add_argument("--proj_type", type=str, default="auto", choices=["auto", "conv", "mlp"])
+    p.add_argument("--proj_mlp_hidden", type=int, default=0,
+                   help="proj_type=mlp일 때 hidden dim. 0이면 ckpt args에서 자동 추론.")
 
     p.add_argument("--ckpt", type=str, required=True)
     p.add_argument("--output_dir", type=str, required=True)
@@ -189,12 +192,36 @@ def main():
     model.eval()
 
     ckpt = torch.load(args.ckpt, map_location="cpu")
-    model.stage1_adapter.load_state_dict(ckpt["stage1_adapter"], strict=True)
-    model.stage1_proj.load_state_dict(ckpt["stage1_proj"], strict=True)
+    ckpt_args = ckpt.get("args", {}) if isinstance(ckpt, dict) else {}
+    proj_type = args.proj_type
+    if proj_type == "auto":
+        proj_type = str(ckpt_args.get("proj_type", "conv"))
+    proj_hidden = int(args.proj_mlp_hidden)
+    if proj_hidden <= 0:
+        proj_hidden = int(ckpt_args.get("proj_mlp_hidden", 256))
+
+    # Rebuild projector to match checkpoint if needed (avoid state_dict mismatch).
+    if getattr(model.stage3_proj, "proj_type", "conv") != proj_type:
+        model = SeloV0Model(
+            segformer_model=args.segformer_model,
+            dino_model=args.dino_model,
+            num_classes=args.num_classes,
+            adapter_hidden_ratio=args.adapter_hidden_ratio,
+            adapter_scale=args.adapter_scale,
+            proj_type=proj_type,
+            proj_mlp_hidden=proj_hidden,
+        ).to(device)
+        model.eval()
+
+    model.stage3_adapter.load_state_dict(ckpt["stage3_adapter"], strict=True)
+    model.stage3_proj.load_state_dict(ckpt["stage3_proj"], strict=True)
     logger.info(f"Loaded adapter checkpoint: {args.ckpt}")
+    logger.info(f"Projector: type={proj_type} mlp_hidden={proj_hidden}")
     try:
-        scale_val = float(model.stage1_adapter.scale.detach().cpu().item())
-        logger.info(f"Adapter scale: {scale_val:.6f}")
+        s = model.stage3_adapter.scale.detach().float()
+        logger.info(
+            f"Adapter scale: mean={float(s.mean().item()):.6f} |max|={float(s.abs().max().item()):.6f}"
+        )
     except Exception:
         logger.info("Adapter scale: <unavailable>")
 
@@ -215,10 +242,10 @@ def main():
             outputs = model(images, use_dino=False)
             logits = outputs["logits"]
             if not logged_delta:
-                f_raw = outputs["stage1_raw"]
-                f_adapt = outputs["stage1_adapt"]
+                f_raw = outputs["stage3_raw"]
+                f_adapt = outputs["stage3_adapt"]
                 delta = (f_adapt - f_raw).pow(2).mean().sqrt().item()
-                logger.info(f"Stage1 adapt delta (L2 mean sqrt): {delta:.6f}")
+                logger.info(f"Stage3 adapt delta (L2 mean sqrt): {delta:.6f}")
                 logged_delta = True
 
         logits = F.interpolate(logits, size=labels.shape[-2:], mode="bilinear", align_corners=False)

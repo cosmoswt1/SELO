@@ -1,0 +1,108 @@
+2026-02-09 16:34:17 | Starting evaluation...
+2026-02-09 16:34:17 | Args: acdc_root=/mnt/d/ACDC split=val conditions=['fog', 'night', 'rain', 'snow'] resize=1080 batch_size=1 workers=0 segformer_model=nvidia/segformer-b5-finetuned-cityscapes-1024-1024 dino_model=facebook/dinov3-vitl16-pretrain-lvd1689m num_classes=19 adapter_hidden_ratio=1.0 adapter_scale=1.0 proj_type=auto proj_mlp_hidden=0 ckpt=/home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5/adapter.pth output_dir=/home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5 qual_dir=/home/kevinlee01/SELO/outputs/qual/k7_a256_mlp_lrproj1e-5 exp_id=k7_a256_mlp_lrproj1e-5 seed=1 epochs=1 results_path=/home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5/results.csv
+2026-02-09 16:34:25 | Loaded adapter checkpoint: /home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5/adapter.pth
+2026-02-09 16:34:25 | Projector: type=mlp mlp_hidden=256
+2026-02-09 16:34:25 | Adapter scale: 1.000466
+2026-02-09 16:34:25 | Stage3 adapt delta (L2 mean sqrt): 0.001535
+2026-02-09 16:38:39 | Overall mIoU: 54.03%
+2026-02-09 16:38:39 | Condition mIoU: fog=70.60%, night=30.56%, rain=60.36%, snow=54.13%
+2026-02-09 16:38:39 | class_iou/road: 80.69%
+2026-02-09 16:38:39 | class_iou/sidewalk: 37.80%
+2026-02-09 16:38:39 | class_iou/building: 67.66%
+2026-02-09 16:38:39 | class_iou/wall: 30.27%
+2026-02-09 16:38:39 | class_iou/fence: 31.57%
+2026-02-09 16:38:39 | class_iou/pole: 47.61%
+2026-02-09 16:38:39 | class_iou/traffic light: 68.12%
+2026-02-09 16:38:39 | class_iou/traffic sign: 55.28%
+2026-02-09 16:38:39 | class_iou/vegetation: 77.78%
+2026-02-09 16:38:39 | class_iou/terrain: 36.77%
+2026-02-09 16:38:39 | class_iou/sky: 81.68%
+2026-02-09 16:38:39 | class_iou/person: 55.07%
+2026-02-09 16:38:39 | class_iou/rider: 23.01%
+2026-02-09 16:38:39 | class_iou/car: 82.78%
+2026-02-09 16:38:39 | class_iou/truck: 63.98%
+2026-02-09 16:38:39 | class_iou/bus: 63.67%
+2026-02-09 16:38:39 | class_iou/train: 51.07%
+2026-02-09 16:38:39 | class_iou/motorcycle: 36.68%
+2026-02-09 16:38:39 | class_iou/bicycle: 35.04%
+2026-02-09 16:49:05 | Starting evaluation...
+2026-02-09 16:49:05 | Args: acdc_root=/mnt/d/ACDC split=val conditions=['fog', 'night', 'rain', 'snow'] resize=1080 batch_size=1 workers=0 segformer_model=nvidia/segformer-b5-finetuned-cityscapes-1024-1024 dino_model=facebook/dinov3-vitl16-pretrain-lvd1689m num_classes=19 adapter_hidden_ratio=1.0 adapter_scale=1.0 proj_type=auto proj_mlp_hidden=0 ckpt=/home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5/adapter.pth output_dir=/home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5 qual_dir=/home/kevinlee01/SELO/outputs/qual/k7_a256_mlp_lrproj1e-5 exp_id=k7_a256_mlp_lrproj1e-5 seed=1 epochs=1 results_path=/home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5/results.csv
+2026-02-09 16:49:09 | Loaded adapter checkpoint: /home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5/adapter.pth
+2026-02-09 16:49:09 | Projector: type=mlp mlp_hidden=256
+2026-02-09 16:49:09 | Adapter scale: 1.002273
+2026-02-09 16:49:10 | Stage3 adapt delta (L2 mean sqrt): 0.004543
+2026-02-09 16:53:27 | Overall mIoU: 54.03%
+2026-02-09 16:53:27 | Condition mIoU: fog=70.60%, night=30.56%, rain=60.36%, snow=54.13%
+2026-02-09 16:53:27 | class_iou/road: 80.69%
+2026-02-09 16:53:27 | class_iou/sidewalk: 37.81%
+2026-02-09 16:53:27 | class_iou/building: 67.64%
+2026-02-09 16:53:27 | class_iou/wall: 30.27%
+2026-02-09 16:53:27 | class_iou/fence: 31.60%
+2026-02-09 16:53:27 | class_iou/pole: 47.62%
+2026-02-09 16:53:27 | class_iou/traffic light: 68.10%
+2026-02-09 16:53:27 | class_iou/traffic sign: 55.28%
+2026-02-09 16:53:27 | class_iou/vegetation: 77.79%
+2026-02-09 16:53:27 | class_iou/terrain: 36.76%
+2026-02-09 16:53:27 | class_iou/sky: 81.68%
+2026-02-09 16:53:27 | class_iou/person: 55.06%
+2026-02-09 16:53:27 | class_iou/rider: 23.00%
+2026-02-09 16:53:27 | class_iou/car: 82.76%
+2026-02-09 16:53:27 | class_iou/truck: 64.04%
+2026-02-09 16:53:27 | class_iou/bus: 63.70%
+2026-02-09 16:53:27 | class_iou/train: 51.07%
+2026-02-09 16:53:27 | class_iou/motorcycle: 36.68%
+2026-02-09 16:53:27 | class_iou/bicycle: 35.05%
+2026-02-09 18:08:46 | Starting evaluation...
+2026-02-09 18:08:46 | Args: acdc_root=/mnt/d/ACDC split=val conditions=['fog', 'night', 'rain', 'snow'] resize=1080 batch_size=1 workers=0 segformer_model=nvidia/segformer-b5-finetuned-cityscapes-1024-1024 dino_model=facebook/dinov3-vitl16-pretrain-lvd1689m num_classes=19 adapter_hidden_ratio=1.0 adapter_scale=1.0 proj_type=auto proj_mlp_hidden=0 ckpt=/home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5/adapter.pth output_dir=/home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5 qual_dir=/home/kevinlee01/SELO/outputs/qual/k7_a256_mlp_lrproj1e-5 exp_id=k7_a256_mlp_lrproj1e-5 seed=1 epochs=5 results_path=/home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5/results.csv
+2026-02-09 18:08:54 | Loaded adapter checkpoint: /home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5/adapter.pth
+2026-02-09 18:08:54 | Projector: type=mlp mlp_hidden=256
+2026-02-09 18:08:54 | Adapter scale: mean=1.102311 |max|=1.298217
+2026-02-09 18:08:54 | Stage3 adapt delta (L2 mean sqrt): 0.092816
+2026-02-09 18:13:08 | Overall mIoU: 53.54%
+2026-02-09 18:13:08 | Condition mIoU: fog=70.52%, night=30.33%, rain=59.89%, snow=53.85%
+2026-02-09 18:13:08 | class_iou/road: 81.15%
+2026-02-09 18:13:08 | class_iou/sidewalk: 38.28%
+2026-02-09 18:13:08 | class_iou/building: 66.50%
+2026-02-09 18:13:08 | class_iou/wall: 30.28%
+2026-02-09 18:13:08 | class_iou/fence: 31.09%
+2026-02-09 18:13:08 | class_iou/pole: 45.69%
+2026-02-09 18:13:08 | class_iou/traffic light: 67.61%
+2026-02-09 18:13:08 | class_iou/traffic sign: 55.45%
+2026-02-09 18:13:08 | class_iou/vegetation: 77.82%
+2026-02-09 18:13:08 | class_iou/terrain: 36.34%
+2026-02-09 18:13:08 | class_iou/sky: 81.63%
+2026-02-09 18:13:08 | class_iou/person: 55.13%
+2026-02-09 18:13:08 | class_iou/rider: 23.70%
+2026-02-09 18:13:08 | class_iou/car: 83.03%
+2026-02-09 18:13:08 | class_iou/truck: 61.42%
+2026-02-09 18:13:08 | class_iou/bus: 63.05%
+2026-02-09 18:13:08 | class_iou/train: 50.49%
+2026-02-09 18:13:08 | class_iou/motorcycle: 34.78%
+2026-02-09 18:13:08 | class_iou/bicycle: 33.83%
+2026-02-09 18:45:50 | Starting evaluation...
+2026-02-09 18:45:50 | Args: acdc_root=/mnt/d/ACDC split=val conditions=['fog', 'night', 'rain', 'snow'] resize=1080 batch_size=1 workers=0 segformer_model=nvidia/segformer-b5-finetuned-cityscapes-1024-1024 dino_model=facebook/dinov3-vitl16-pretrain-lvd1689m num_classes=19 adapter_hidden_ratio=1.0 adapter_scale=1.0 proj_type=auto proj_mlp_hidden=0 ckpt=/home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5/adapter.pth output_dir=/home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5 qual_dir=/home/kevinlee01/SELO/outputs/qual/k7_a256_mlp_lrproj1e-5 exp_id=k7_a256_mlp_lrproj1e-5 seed=1 epochs=1 results_path=/home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5/results.csv
+2026-02-09 18:45:54 | Loaded adapter checkpoint: /home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5/adapter.pth
+2026-02-09 18:45:54 | Projector: type=mlp mlp_hidden=256
+2026-02-09 18:45:54 | Adapter scale: mean=1.016622 |max|=1.078278
+2026-02-09 18:45:55 | Stage3 adapt delta (L2 mean sqrt): 0.062644
+2026-02-09 18:50:13 | Overall mIoU: 54.05%
+2026-02-09 18:50:13 | Condition mIoU: fog=70.43%, night=30.25%, rain=60.39%, snow=54.52%
+2026-02-09 18:50:13 | class_iou/road: 80.07%
+2026-02-09 18:50:13 | class_iou/sidewalk: 37.64%
+2026-02-09 18:50:13 | class_iou/building: 68.54%
+2026-02-09 18:50:13 | class_iou/wall: 30.02%
+2026-02-09 18:50:13 | class_iou/fence: 32.08%
+2026-02-09 18:50:13 | class_iou/pole: 47.98%
+2026-02-09 18:50:13 | class_iou/traffic light: 67.99%
+2026-02-09 18:50:13 | class_iou/traffic sign: 55.38%
+2026-02-09 18:50:13 | class_iou/vegetation: 77.85%
+2026-02-09 18:50:13 | class_iou/terrain: 36.08%
+2026-02-09 18:50:13 | class_iou/sky: 81.80%
+2026-02-09 18:50:13 | class_iou/person: 54.87%
+2026-02-09 18:50:13 | class_iou/rider: 21.63%
+2026-02-09 18:50:13 | class_iou/car: 82.16%
+2026-02-09 18:50:13 | class_iou/truck: 64.91%
+2026-02-09 18:50:13 | class_iou/bus: 64.98%
+2026-02-09 18:50:13 | class_iou/train: 51.08%
+2026-02-09 18:50:13 | class_iou/motorcycle: 36.60%
+2026-02-09 18:50:13 | class_iou/bicycle: 35.37%

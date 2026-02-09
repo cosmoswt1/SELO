@@ -5,7 +5,7 @@ Minimal diagnostics to answer: "is training signal sane?"
 Artifacts:
 1) Anchor overlay on input image (top: candidate entropy low anchors)
 2) Teacher entropy histogram (candidates vs selected)
-3) |delta| map between stage1_raw and stage1_adapt (per-pixel over channels)
+3) |delta| map between stage3_raw and stage3_adapt (per-pixel over channels)
 """
 
 from __future__ import annotations
@@ -162,6 +162,9 @@ def parse_args():
     p.add_argument("--num_classes", type=int, default=19)
     p.add_argument("--adapter_hidden_ratio", type=float, default=1.0)
     p.add_argument("--adapter_scale", type=float, default=1.0)
+    p.add_argument("--proj_type", type=str, default="auto", choices=["auto", "conv", "mlp"])
+    p.add_argument("--proj_mlp_hidden", type=int, default=0,
+                   help="proj_type=mlp일 때 hidden dim. 0이면 ckpt args에서 자동 추론.")
 
     p.add_argument("--ckpt", type=str, default="")
     p.add_argument("--affinity_k", type=int, default=7)
@@ -293,8 +296,28 @@ def main():
 
     if args.ckpt:
         ckpt = torch.load(args.ckpt, map_location="cpu")
-        model.stage1_adapter.load_state_dict(ckpt["stage1_adapter"], strict=True)
-        model.stage1_proj.load_state_dict(ckpt["stage1_proj"], strict=True)
+        ckpt_args = ckpt.get("args", {}) if isinstance(ckpt, dict) else {}
+        proj_type = args.proj_type
+        if proj_type == "auto":
+            proj_type = str(ckpt_args.get("proj_type", "conv"))
+        proj_hidden = int(args.proj_mlp_hidden)
+        if proj_hidden <= 0:
+            proj_hidden = int(ckpt_args.get("proj_mlp_hidden", 256))
+
+        if getattr(model.stage3_proj, "proj_type", "conv") != proj_type:
+            model = SeloV0Model(
+                segformer_model=args.segformer_model,
+                dino_model=args.dino_model,
+                num_classes=args.num_classes,
+                adapter_hidden_ratio=args.adapter_hidden_ratio,
+                adapter_scale=args.adapter_scale,
+                proj_type=proj_type,
+                proj_mlp_hidden=proj_hidden,
+            ).to(device)
+            model.eval()
+
+        model.stage3_adapter.load_state_dict(ckpt["stage3_adapter"], strict=True)
+        model.stage3_proj.load_state_dict(ckpt["stage3_proj"], strict=True)
 
     loss_fn = None
     if args.mode == "full":
@@ -325,9 +348,8 @@ def main():
             assert loss_fn is not None
             with torch.no_grad():
                 out = model(images, use_dino=True, compute_logits=False)
-                f1 = out["stage1_adapt"]
-                f1_pool = F.avg_pool2d(f1, kernel_size=4, stride=4)
-                proj = model.stage1_proj(f1_pool)
+                f3 = out["stage3_adapt"]
+                proj = model.stage3_proj(f3)
                 dino_feat = out["dino_feat"]
                 _loss, _stats, debug = loss_fn(proj, dino_feat, return_stats=True, return_debug=True)
 
@@ -349,8 +371,8 @@ def main():
 
         # 3) Delta map: |f1_adapt - f1_raw| aggregated across channels, upsample to input
         with torch.no_grad():
-            f_raw = out["stage1_raw"].float()
-            f_adapt = out["stage1_adapt"].float()
+            f_raw = out["stage3_raw"].float()
+            f_adapt = out["stage3_adapt"].float()
             delta = (f_adapt - f_raw).abs().mean(dim=1, keepdim=True)  # [B,1,H,W]
             delta_up = F.interpolate(delta, size=(inp_h, inp_w), mode="bilinear", align_corners=False)
             # Percentile normalize per-image to make changes easier to see.

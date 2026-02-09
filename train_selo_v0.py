@@ -1,4 +1,4 @@
-"""Train SELO v0: stage1 adapter + DINO local affinity distillation (flow-free)."""
+"""Train SELO v0: stage3 adapter + DINO local affinity distillation (flow-free)."""
 
 import argparse
 import logging
@@ -51,12 +51,25 @@ def parse_args():
     p.add_argument("--epochs", type=int, default=5)
     p.add_argument("--batch_size", type=int, default=4)
     p.add_argument("--workers", type=int, default=4)
-    p.add_argument("--lr", type=float, default=5e-5)
-    p.add_argument("--lr_proj", type=float, default=None)
+    p.add_argument("--lr", type=float, default=1e-3)
+    p.add_argument("--lr_proj", type=float, default=1e-4)
     p.add_argument("--proj_warmup_steps", type=int, default=0,
                    help="처음 N step 동안 proj만 학습하고 이후 proj를 고정한 채 adapter만 학습합니다. (0이면 비활성)")
+    p.add_argument(
+        "--lr_proj_after_warmup",
+        type=float,
+        default=None,
+        help="proj_warmup_steps 이후에도 proj를 아주 작은 lr로 계속 학습합니다. (None/<=0이면 proj 완전 고정)",
+    )
+    p.add_argument("--proj_type", type=str, default="mlp", choices=["conv", "mlp"])
+    p.add_argument("--proj_mlp_hidden", type=int, default=256,
+                   help="proj_type=mlp일 때 hidden dim (1x1 conv 기반 2-layer MLP)")
     p.add_argument("--weight_decay", type=float, default=0.01)
+    p.add_argument("--weight_decay_proj", type=float, default=None,
+                   help="proj 파라미터에만 적용할 weight_decay (None이면 weight_decay와 동일)")
     p.add_argument("--max_grad_norm", type=float, default=1.0)
+    p.add_argument("--max_grad_norm_proj", type=float, default=None,
+                   help="proj에만 적용할 grad clip (None이면 max_grad_norm와 동일)")
     p.add_argument("--amp", action="store_true")
     p.add_argument("--seed", type=int, default=1)
     p.add_argument("--grad_accum_steps", type=int, default=1)
@@ -185,6 +198,8 @@ def main():
         num_classes=args.num_classes,
         adapter_hidden_ratio=args.adapter_hidden_ratio,
         adapter_scale=args.adapter_scale,
+        proj_type=args.proj_type,
+        proj_mlp_hidden=int(args.proj_mlp_hidden),
     ).to(device)
     model.freeze_backbone()
 
@@ -217,15 +232,21 @@ def main():
     loader = build_loader(args.batch_size)
     lr_adapter_base = float(args.lr)
     lr_proj_base = float(args.lr if args.lr_proj is None else args.lr_proj)
+    wd_adapter = float(args.weight_decay)
+    wd_proj = float(args.weight_decay if args.weight_decay_proj is None else args.weight_decay_proj)
     optimizer = torch.optim.AdamW(
         [
-            {"params": model.stage1_adapter.parameters(), "lr": lr_adapter_base},
-            {"params": model.stage1_proj.parameters(), "lr": lr_proj_base},
+            {"params": model.stage3_adapter.parameters(), "lr": lr_adapter_base, "weight_decay": wd_adapter},
+            {"params": model.stage3_proj.parameters(), "lr": lr_proj_base, "weight_decay": wd_proj},
         ],
-        weight_decay=args.weight_decay,
     )
 
     warmup_steps = max(0, int(args.proj_warmup_steps))
+    lr_proj_after_warmup = args.lr_proj_after_warmup
+    if lr_proj_after_warmup is not None:
+        lr_proj_after_warmup = float(lr_proj_after_warmup)
+        if lr_proj_after_warmup <= 0.0:
+            lr_proj_after_warmup = None
     accum = max(1, int(args.grad_accum_steps))
     warmup_steps_eff = warmup_steps
     if warmup_steps_eff > 0 and (warmup_steps_eff % accum) != 0:
@@ -245,25 +266,29 @@ def main():
 
         if name == "warmup_proj":
             # proj only
-            for p in model.stage1_adapter.parameters():
+            for p in model.stage3_adapter.parameters():
                 p.requires_grad = False
-            for p in model.stage1_proj.parameters():
+            for p in model.stage3_proj.parameters():
                 p.requires_grad = True
             lr_adapter_eff = 0.0
             lr_proj_eff = lr_proj_base
         elif name == "train_adapter":
-            # adapter only (proj fixed)
-            for p in model.stage1_adapter.parameters():
+            # adapter training + (optional) small proj lr
+            for p in model.stage3_adapter.parameters():
                 p.requires_grad = True
-            for p in model.stage1_proj.parameters():
-                p.requires_grad = False
+            if lr_proj_after_warmup is not None:
+                for p in model.stage3_proj.parameters():
+                    p.requires_grad = True
+            else:
+                for p in model.stage3_proj.parameters():
+                    p.requires_grad = False
             lr_adapter_eff = lr_adapter_base
-            lr_proj_eff = 0.0
+            lr_proj_eff = 0.0 if lr_proj_after_warmup is None else float(lr_proj_after_warmup)
         elif name == "joint":
             # backward-compatible behavior
-            for p in model.stage1_adapter.parameters():
+            for p in model.stage3_adapter.parameters():
                 p.requires_grad = True
-            for p in model.stage1_proj.parameters():
+            for p in model.stage3_proj.parameters():
                 p.requires_grad = True
             lr_adapter_eff = lr_adapter_base
             lr_proj_eff = lr_proj_base
@@ -283,7 +308,13 @@ def main():
 
     if warmup_steps_eff > 0:
         set_phase("warmup_proj")
-        logger.info(f"[sched] warmup_steps={warmup_steps} (effective={warmup_steps_eff}) 이후 proj 고정 + adapter 학습")
+        if lr_proj_after_warmup is None:
+            logger.info(f"[sched] warmup_steps={warmup_steps} (effective={warmup_steps_eff}) 이후 proj 고정 + adapter 학습")
+        else:
+            logger.info(
+                f"[sched] warmup_steps={warmup_steps} (effective={warmup_steps_eff}) 이후 adapter 학습 + "
+                f"proj lr={_fmt_lr(float(lr_proj_after_warmup))}"
+            )
     else:
         set_phase("joint")
 
@@ -307,12 +338,11 @@ def main():
             images = batch["image"].to(device)
 
             with autocast(device_type="cuda", dtype=torch.float16, enabled=args.amp):
-                # Training objective only needs stage1 + DINO; computing downstream stages/logits
-                # builds a huge autograd graph (since f1_adapt requires grad) and will blow up VRAM.
+                # Training objective only needs stage3 + DINO; computing downstream stages/logits
+                # builds a huge autograd graph and will blow up VRAM.
                 out = model(images, use_dino=True, compute_logits=False)
-                f1 = out["stage1_adapt"]
-                f1_pool = F.avg_pool2d(f1, kernel_size=4, stride=4)
-                proj = model.stage1_proj(f1_pool)
+                f3 = out["stage3_adapt"]
+                proj = model.stage3_proj(f3)
                 dino_feat = out["dino_feat"]
                 aff_stats = None
                 aff_debug = None
@@ -359,39 +389,49 @@ def main():
                 inp_h, inp_w = images.shape[-2:]
                 dino_h, dino_w = out["dino_grid"]
                 logger.info(
-                    "Stage1 shape: " + str(tuple(out["stage1_raw"].shape))
+                    "Stage3 shape: " + str(tuple(out["stage3_raw"].shape))
                 )
                 logger.info(
-                    f"Alignment: input={inp_h}x{inp_w}, stage1={f1.shape[-2:]} "
-                    f"pooled={f1_pool.shape[-2:]}, dino={dino_h}x{dino_w}"
+                    f"Alignment: input={inp_h}x{inp_w}, stage3={f3.shape[-2:]} "
+                    f"dino={dino_h}x{dino_w}"
                 )
 
             if do_log:
                 pbar.set_postfix(loss=f"{raw_loss.item():.4f}")
                 with torch.no_grad():
-                    f_raw = out["stage1_raw"].detach()
-                    f_adapt = out["stage1_adapt"].detach()
+                    f_raw = out["stage3_raw"].detach()
+                    f_adapt = out["stage3_adapt"].detach()
                     base_rms = float(f_raw.float().pow(2).mean().sqrt().item())
                     delta_rms = float((f_adapt - f_raw).float().pow(2).mean().sqrt().item())
                     delta_over_base = float(delta_rms / (base_rms + 1e-12))
 
                 scale = float(scaler.get_scale()) if args.amp else 1.0
-                g_adapter = _grad_l2_norm(model.stage1_adapter.parameters()) / max(scale, 1e-12)
-                g_proj = _grad_l2_norm(model.stage1_proj.parameters()) / max(scale, 1e-12)
-                adapter_scale = float(model.stage1_adapter.scale.detach().cpu().item())
+                g_adapter = _grad_l2_norm(model.stage3_adapter.parameters()) / max(scale, 1e-12)
+                g_proj = _grad_l2_norm(model.stage3_proj.parameters()) / max(scale, 1e-12)
+                with torch.no_grad():
+                    s = model.stage3_adapter.scale.detach().float()
+                    adapter_scale_mean = float(s.mean().item())
+                    adapter_scale_max = float(s.abs().max().item())
 
                 logger.info(f"STEP {epoch} {step} LOSS {raw_loss.item():.6f}")
                 logger.info(
                     f"DBG {epoch} {step} "
                     f"base_rms={base_rms:.6f} delta_rms={delta_rms:.6f} delta/base={delta_over_base:.6f} "
                     f"g_adapter={g_adapter:.6f} g_proj={g_proj:.6f} "
-                    f"adapter_scale={adapter_scale:.6f} "
+                    f"adapter_scale(mean)={adapter_scale_mean:.6f} adapter_scale(|max|)={adapter_scale_max:.6f} "
                     f"lr_adapter={_fmt_lr(lr_adapter_eff)} lr_proj={_fmt_lr(lr_proj_eff)}"
                 )
                 logger.info(
                     f"AFF {epoch} {step} "
                     f"tau={aff_stats['tau']:g} candidates={aff_stats['candidates']} anchors={aff_stats['anchors']} "
+                    f"(req a={aff_stats.get('anchors_req','?')} c={aff_stats.get('candidates_req','?')} grid={aff_stats.get('grid_total','?')}) "
                     f"k2={aff_stats['k2']} "
+                    f"sim_s(mean/std/max)={aff_stats.get('sim_s_mean', float('nan')):.4f}/"
+                    f"{aff_stats.get('sim_s_std', float('nan')):.4f}/"
+                    f"{aff_stats.get('sim_s_max', float('nan')):.4f} "
+                    f"sim_t(mean/std/max)={aff_stats.get('sim_t_mean', float('nan')):.4f}/"
+                    f"{aff_stats.get('sim_t_std', float('nan')):.4f}/"
+                    f"{aff_stats.get('sim_t_max', float('nan')):.4f} "
                     f"p_t_max={aff_stats['p_t_max']:.4f} p_t_ent={aff_stats['p_t_ent']:.4f} "
                     f"p_s_max={aff_stats['p_s_max']:.4f} p_s_ent={aff_stats['p_s_ent']:.4f}"
                 )
@@ -427,7 +467,10 @@ def main():
 
             if (step + 1) % max(1, args.grad_accum_steps) == 0:
                 scaler.unscale_(optimizer)
-                torch.nn.utils.clip_grad_norm_(model.parameters(), args.max_grad_norm)
+                # Clip adapter/proj separately (proj may have different threshold).
+                torch.nn.utils.clip_grad_norm_(model.stage3_adapter.parameters(), args.max_grad_norm)
+                max_proj = args.max_grad_norm if args.max_grad_norm_proj is None else float(args.max_grad_norm_proj)
+                torch.nn.utils.clip_grad_norm_(model.stage3_proj.parameters(), max_proj)
                 scaler.step(optimizer)
                 scaler.update()
                 optimizer.zero_grad(set_to_none=True)
@@ -435,8 +478,8 @@ def main():
 
     logger.info(f"Training done. elapsed_sec={time.time() - start:.1f}")
     adapter_ckpt = {
-        "stage1_adapter": model.stage1_adapter.state_dict(),
-        "stage1_proj": model.stage1_proj.state_dict(),
+        "stage3_adapter": model.stage3_adapter.state_dict(),
+        "stage3_proj": model.stage3_proj.state_dict(),
         "args": vars(args),
     }
     torch.save(adapter_ckpt, output_dir / "adapter.pth")

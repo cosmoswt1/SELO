@@ -63,6 +63,17 @@ class SegFormerBackbone(nn.Module):
     def forward_stage1(self, x: torch.Tensor) -> torch.Tensor:
         return self._run_encoder_stage(x, stage_idx=0)
 
+    def forward_stage3(self, x: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+        """Run encoder stages 0..2 and return (f1, f2, f3)."""
+        f1 = self.forward_stage1(x)
+        f2 = self._run_encoder_stage(f1, stage_idx=1)
+        f3 = self._run_encoder_stage(f2, stage_idx=2)
+        return f1, f2, f3
+
+    def forward_from_stage3(self, f3: torch.Tensor) -> torch.Tensor:
+        """Run encoder stage 3 only, given stage3 feature map."""
+        return self._run_encoder_stage(f3, stage_idx=3)
+
     def forward_from_stage1(self, f1: torch.Tensor) -> list[torch.Tensor]:
         f2 = self._run_encoder_stage(f1, stage_idx=1)
         f3 = self._run_encoder_stage(f2, stage_idx=2)

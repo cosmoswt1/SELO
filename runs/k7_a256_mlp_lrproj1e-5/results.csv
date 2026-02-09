@@ -1,0 +1,5 @@
+exp_id,commit,seed,epochs,split,overall,fog,rain,snow,night,avg,delta_baseline,run_dir
+k7_a256_mlp_lrproj1e-5,76e26fa,1,1,val,54.03,70.60,60.36,54.13,30.56,53.91,-2.63,/home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5
+k7_a256_mlp_lrproj1e-5,76e26fa,1,1,val,54.03,70.60,60.36,54.13,30.56,53.91,-2.63,/home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5
+k7_a256_mlp_lrproj1e-5,76e26fa,1,5,val,53.54,70.52,59.89,53.85,30.33,53.65,-2.90,/home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5
+k7_a256_mlp_lrproj1e-5,76e26fa,1,1,val,54.05,70.43,60.39,54.52,30.25,53.90,-2.65,/home/kevinlee01/SELO/runs/k7_a256_mlp_lrproj1e-5
