@@ -1,0 +1,2 @@
+exp_id,commit,seed,epochs,split,overall,fog,rain,snow,night,avg,delta_baseline,run_dir
+ep1-SymKL,e682a65,1,5,val,54.03,70.70,60.41,54.09,30.55,53.94,-2.61,/home/kevinlee01/SELO/runs/ep1-SymKL

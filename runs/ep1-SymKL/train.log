@@ -1,6 +1,32 @@
-2026-02-09 19:09:44 | Args: acdc_root=/mnt/d/ACDC conditions=['fog', 'night', 'rain', 'snow'] resize=1072 crop_size=1072 segformer_model=nvidia/segformer-b5-finetuned-cityscapes-1024-1024 dino_model=facebook/dinov3-vitl16-pretrain-lvd1689m num_classes=19 adapter_hidden_ratio=1.0 adapter_scale=1.0 epochs=1 batch_size=4 workers=4 lr=0.001 lr_proj=0.0001 proj_warmup_steps=50 lr_proj_after_warmup=0.0 proj_type=mlp proj_mlp_hidden=256 weight_decay=0.01 weight_decay_proj=None max_grad_norm=1.0 max_grad_norm_proj=None amp=True seed=1 grad_accum_steps=4 affinity_k=7 affinity_tau=0.2 lambda_aff=1.0 affinity_anchors=256 affinity_candidates=4096 affinity_kcenter_top_m=1500 affinity_per_image=1 wandb=False wandb_project=SELO wandb_entity= wandb_group= wandb_run_name= output_dir=/home/kevinlee01/SELO/runs/ep1-SymKL log_every=50 diag_anchor_every=1 diag_anchor_dir= diag_anchor_max=0 diag_anchor_per_call=1
-2026-02-09 19:09:44 | [diag] save train anchors every=1 per_call=1 max=inf dir=/home/kevinlee01/SELO/runs/ep1-SymKL/diag_train_anchors
-2026-02-09 19:09:46 | Using batch_size=4, grad_accum_steps=4, effective_batch=16
-2026-02-09 19:09:46 | [sched] proj_warmup_steps=50 는 grad_accum_steps=4 의 배수가 아니어서 52 로 올림(phase 전환 시 누적 grad 혼합 방지)
-2026-02-09 19:09:46 | [phase] warmup_proj | lr_adapter=0.0 lr_proj=0.0001 | trainable=stage3_proj.proj.0.weight, stage3_proj.proj.0.bias, stage3_proj.proj.2.ln.weight, stage3_proj.proj.2.ln.bias, stage3_proj.proj.3.weight, stage3_proj.proj.3.bias
-2026-02-09 19:09:46 | [sched] warmup_steps=50 (effective=52) 이후 proj 고정 + adapter 학습
+2026-02-09 19:13:30 | Args: acdc_root=/mnt/d/ACDC conditions=['fog', 'night', 'rain', 'snow'] resize=1072 crop_size=1072 segformer_model=nvidia/segformer-b5-finetuned-cityscapes-1024-1024 dino_model=facebook/dinov3-vitl16-pretrain-lvd1689m num_classes=19 adapter_hidden_ratio=1.0 adapter_scale=1.0 epochs=1 batch_size=4 workers=4 lr=0.001 lr_proj=0.0001 proj_warmup_steps=0 lr_proj_after_warmup=0.0001 proj_type=mlp proj_mlp_hidden=256 weight_decay=0.01 weight_decay_proj=None max_grad_norm=1.0 max_grad_norm_proj=None amp=True seed=1 grad_accum_steps=4 affinity_k=7 affinity_tau=0.2 lambda_aff=1.0 affinity_anchors=256 affinity_candidates=4096 affinity_kcenter_top_m=1500 affinity_per_image=1 wandb=False wandb_project=SELO wandb_entity= wandb_group= wandb_run_name= output_dir=/home/kevinlee01/SELO/runs/ep1-SymKL log_every=50 diag_anchor_every=1 diag_anchor_dir= diag_anchor_max=0 diag_anchor_per_call=1
+2026-02-09 19:13:30 | [diag] save train anchors every=1 per_call=1 max=inf dir=/home/kevinlee01/SELO/runs/ep1-SymKL/diag_train_anchors
+2026-02-09 19:13:33 | Using batch_size=4, grad_accum_steps=4, effective_batch=16
+2026-02-09 19:13:33 | [phase] joint | lr_adapter=0.001 lr_proj=0.0001 | trainable=stage3_adapter.scale, stage3_adapter.conv1.weight, stage3_adapter.conv1.bias, stage3_adapter.dwconv.weight, stage3_adapter.conv2.weight, stage3_adapter.conv2.bias, stage3_proj.proj.0.weight, stage3_proj.proj.0.bias, stage3_proj.proj.2.ln.weight, stage3_proj.proj.2.ln.bias, stage3_proj.proj.3.weight, stage3_proj.proj.3.bias
+2026-02-09 19:13:42 | Stage3 shape: (4, 320, 67, 67)
+2026-02-09 19:13:42 | Alignment: input=1072x1072, stage3=torch.Size([67, 67]) dino=67x67
+2026-02-09 19:13:43 | STEP 0 0 LOSS 0.255953
+2026-02-09 19:13:43 | DBG 0 0 base_rms=0.646212 delta_rms=0.000000 delta/base=0.000000 g_adapter=0.010545 g_proj=0.271685 adapter_scale(mean)=1.000000 adapter_scale(|max|)=1.000000 lr_adapter=0.001 lr_proj=0.0001
+2026-02-09 19:13:43 | AFF 0 0 tau=0.2 candidates=3721 anchors=256 (req a=256 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.5119/0.2464/1.0000 sim_t(mean/std/max)=0.7693/0.1655/1.0000 p_t_max=0.0539 p_t_ent=3.6981 p_s_max=0.1516 p_s_ent=3.3440
+2026-02-09 19:15:01 | STEP 0 50 LOSS 0.089440
+2026-02-09 19:15:01 | DBG 0 50 base_rms=0.667887 delta_rms=0.014038 delta/base=0.021018 g_adapter=0.010367 g_proj=0.169633 adapter_scale(mean)=1.007478 adapter_scale(|max|)=1.009910 lr_adapter=0.001 lr_proj=0.0001
+2026-02-09 19:15:01 | AFF 0 50 tau=0.2 candidates=3721 anchors=256 (req a=256 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8187/0.1305/1.0000 sim_t(mean/std/max)=0.7720/0.1645/1.0000 p_t_max=0.0540 p_t_ent=3.7038 p_s_max=0.0496 p_s_ent=3.7944
+2026-02-09 19:16:21 | STEP 0 100 LOSS 0.077599
+2026-02-09 19:16:21 | DBG 0 100 base_rms=0.619525 delta_rms=0.012025 delta/base=0.019410 g_adapter=0.000771 g_proj=0.038432 adapter_scale(mean)=1.003315 adapter_scale(|max|)=1.023701 lr_adapter=0.001 lr_proj=0.0001
+2026-02-09 19:16:21 | AFF 0 100 tau=0.2 candidates=3721 anchors=256 (req a=256 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8041/0.1591/1.0000 sim_t(mean/std/max)=0.7818/0.1680/1.0000 p_t_max=0.0510 p_t_ent=3.7073 p_s_max=0.0496 p_s_ent=3.7640
+2026-02-09 19:17:41 | STEP 0 150 LOSS 0.079759
+2026-02-09 19:17:41 | DBG 0 150 base_rms=0.681352 delta_rms=0.010991 delta/base=0.016131 g_adapter=0.004575 g_proj=0.082572 adapter_scale(mean)=1.000898 adapter_scale(|max|)=1.027090 lr_adapter=0.001 lr_proj=0.0001
+2026-02-09 19:17:41 | AFF 0 150 tau=0.2 candidates=3721 anchors=256 (req a=256 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.7662/0.1623/1.0000 sim_t(mean/std/max)=0.7639/0.1670/1.0000 p_t_max=0.0545 p_t_ent=3.6866 p_s_max=0.0565 p_s_ent=3.7279
+2026-02-09 19:19:01 | STEP 0 200 LOSS 0.062301
+2026-02-09 19:19:01 | DBG 0 200 base_rms=0.598165 delta_rms=0.011991 delta/base=0.020047 g_adapter=0.001490 g_proj=0.036135 adapter_scale(mean)=1.001009 adapter_scale(|max|)=1.037605 lr_adapter=0.001 lr_proj=0.0001
+2026-02-09 19:19:01 | AFF 0 200 tau=0.2 candidates=3721 anchors=256 (req a=256 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8155/0.1410/1.0000 sim_t(mean/std/max)=0.7845/0.1689/1.0000 p_t_max=0.0503 p_t_ent=3.7064 p_s_max=0.0469 p_s_ent=3.7721
+2026-02-09 19:20:21 | STEP 0 250 LOSS 0.061658
+2026-02-09 19:20:21 | DBG 0 250 base_rms=0.622332 delta_rms=0.012618 delta/base=0.020275 g_adapter=0.002121 g_proj=0.050160 adapter_scale(mean)=1.001542 adapter_scale(|max|)=1.048361 lr_adapter=0.001 lr_proj=0.0001
+2026-02-09 19:20:21 | AFF 0 250 tau=0.2 candidates=3721 anchors=256 (req a=256 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.7835/0.1614/1.0000 sim_t(mean/std/max)=0.7769/0.1693/1.0000 p_t_max=0.0520 p_t_ent=3.6985 p_s_max=0.0533 p_s_ent=3.7342
+2026-02-09 19:21:43 | STEP 0 300 LOSS 0.066204
+2026-02-09 19:21:43 | DBG 0 300 base_rms=0.572178 delta_rms=0.014321 delta/base=0.025029 g_adapter=0.001682 g_proj=0.030503 adapter_scale(mean)=1.003399 adapter_scale(|max|)=1.057888 lr_adapter=0.001 lr_proj=0.0001
+2026-02-09 19:21:43 | AFF 0 300 tau=0.2 candidates=3721 anchors=256 (req a=256 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.7661/0.1607/1.0000 sim_t(mean/std/max)=0.7660/0.1658/1.0000 p_t_max=0.0547 p_t_ent=3.6948 p_s_max=0.0570 p_s_ent=3.7311
+2026-02-09 19:23:02 | STEP 0 350 LOSS 0.049501
+2026-02-09 19:23:02 | DBG 0 350 base_rms=0.599719 delta_rms=0.016248 delta/base=0.027092 g_adapter=0.002894 g_proj=0.052133 adapter_scale(mean)=1.005861 adapter_scale(|max|)=1.069010 lr_adapter=0.001 lr_proj=0.0001
+2026-02-09 19:23:02 | AFF 0 350 tau=0.2 candidates=3721 anchors=256 (req a=256 c=4096 grid=3721) k2=49 sim_s(mean/std/max)=0.8096/0.1476/1.0000 sim_t(mean/std/max)=0.7942/0.1564/1.0000 p_t_max=0.0498 p_t_ent=3.7304 p_s_max=0.0482 p_s_ent=3.7660
+2026-02-09 19:24:20 | Training done. elapsed_sec=647.1
+2026-02-09 19:24:20 | Saved checkpoint: /home/kevinlee01/SELO/runs/ep1-SymKL/adapter.pth
