@@ -1,0 +1,188 @@
+{
+  "targets": [
+    {
+      "condition": "rain",
+      "class_name": "train",
+      "direction": "positive"
+    },
+    {
+      "condition": "rain",
+      "class_name": "bus",
+      "direction": "positive"
+    },
+    {
+      "condition": "rain",
+      "class_name": "pole",
+      "direction": "positive"
+    },
+    {
+      "condition": "rain",
+      "class_name": "person",
+      "direction": "positive"
+    },
+    {
+      "condition": "rain",
+      "class_name": "truck",
+      "direction": "negative"
+    },
+    {
+      "condition": "rain",
+      "class_name": "traffic sign",
+      "direction": "negative"
+    },
+    {
+      "condition": "snow",
+      "class_name": "truck",
+      "direction": "positive"
+    },
+    {
+      "condition": "snow",
+      "class_name": "bus",
+      "direction": "positive"
+    },
+    {
+      "condition": "snow",
+      "class_name": "pole",
+      "direction": "positive"
+    },
+    {
+      "condition": "snow",
+      "class_name": "person",
+      "direction": "positive"
+    },
+    {
+      "condition": "snow",
+      "class_name": "bicycle",
+      "direction": "negative"
+    }
+  ],
+  "overall_miou_csv": "/home/kevinlee01/SELO/exp/CKA/sfda_stage3_cka_g67_w16_l24_a1/runs_new/v0-noupd-continue-noconst/eval_by_epoch/epoch_010/results.csv",
+  "selected_panels": [
+    {
+      "condition": "rain",
+      "class_name": "traffic sign",
+      "direction": "negative",
+      "panel_rel_path": "panels/rain_traffic_sign_negative.png",
+      "class_iou_delta_condition": -0.2550108690782622,
+      "delta_iou": -1.566933853123814,
+      "dominant_effect": "false_positive_growth"
+    },
+    {
+      "condition": "rain",
+      "class_name": "traffic sign",
+      "direction": "negative",
+      "panel_rel_path": "panels/rain_traffic_sign_negative_fp_alert.png",
+      "class_iou_delta_condition": -0.2550108690782622,
+      "delta_iou": 0.0,
+      "dominant_effect": "false_positive_growth"
+    },
+    {
+      "condition": "rain",
+      "class_name": "truck",
+      "direction": "negative",
+      "panel_rel_path": "panels/rain_truck_negative.png",
+      "class_iou_delta_condition": -0.27785562877701153,
+      "delta_iou": -1.7578774145102898,
+      "dominant_effect": "false_positive_growth"
+    },
+    {
+      "condition": "rain",
+      "class_name": "truck",
+      "direction": "negative",
+      "panel_rel_path": "panels/rain_truck_negative_fp_alert.png",
+      "class_iou_delta_condition": -0.27785562877701153,
+      "delta_iou": 0.0,
+      "dominant_effect": "false_positive_growth"
+    },
+    {
+      "condition": "rain",
+      "class_name": "bus",
+      "direction": "positive",
+      "panel_rel_path": "panels/rain_bus_positive.png",
+      "class_iou_delta_condition": 0.32301092777647966,
+      "delta_iou": 1.9155480688982607,
+      "dominant_effect": "extent_recovery"
+    },
+    {
+      "condition": "rain",
+      "class_name": "person",
+      "direction": "positive",
+      "panel_rel_path": "panels/rain_person_positive.png",
+      "class_iou_delta_condition": 0.1931534851746619,
+      "delta_iou": 0.8519275953700518,
+      "dominant_effect": "boundary_recovery"
+    },
+    {
+      "condition": "rain",
+      "class_name": "pole",
+      "direction": "positive",
+      "panel_rel_path": "panels/rain_pole_positive.png",
+      "class_iou_delta_condition": 0.3562355575012788,
+      "delta_iou": 2.0165135610796767,
+      "dominant_effect": "extent_recovery"
+    },
+    {
+      "condition": "rain",
+      "class_name": "train",
+      "direction": "positive",
+      "panel_rel_path": "panels/rain_train_positive.png",
+      "class_iou_delta_condition": 1.0640005944550168,
+      "delta_iou": 1.17565372891643,
+      "dominant_effect": "extent_recovery"
+    },
+    {
+      "condition": "snow",
+      "class_name": "bicycle",
+      "direction": "negative",
+      "panel_rel_path": "panels/snow_bicycle_negative.png",
+      "class_iou_delta_condition": -0.14609239672532226,
+      "delta_iou": -2.980132450331123,
+      "dominant_effect": "missed_extent"
+    },
+    {
+      "condition": "snow",
+      "class_name": "bicycle",
+      "direction": "negative",
+      "panel_rel_path": "panels/snow_bicycle_negative_fp_alert.png",
+      "class_iou_delta_condition": -0.14609239672532226,
+      "delta_iou": 0.0,
+      "dominant_effect": "false_positive_growth"
+    },
+    {
+      "condition": "snow",
+      "class_name": "bus",
+      "direction": "positive",
+      "panel_rel_path": "panels/snow_bus_positive.png",
+      "class_iou_delta_condition": 0.32072430225382664,
+      "delta_iou": 1.6474836380049709,
+      "dominant_effect": "boundary_recovery"
+    },
+    {
+      "condition": "snow",
+      "class_name": "person",
+      "direction": "positive",
+      "panel_rel_path": "panels/snow_person_positive.png",
+      "class_iou_delta_condition": 0.16501685824383117,
+      "delta_iou": 1.4485514485514468,
+      "dominant_effect": "boundary_recovery"
+    },
+    {
+      "condition": "snow",
+      "class_name": "pole",
+      "direction": "positive",
+      "panel_rel_path": "panels/snow_pole_positive.png",
+      "class_iou_delta_condition": 0.23349392336469066,
+      "delta_iou": 5.454511376841474,
+      "dominant_effect": "extent_recovery"
+    },
+    {
+      "condition": "snow",
+      "class_name": "truck",
+      "direction": "positive",
+      "panel_rel_path": "panels/snow_truck_positive.png",
+      "class_iou_delta_condition": 1.287048068511453,
+      "delta_iou": 2.3013103553439436,
+      "dominant_effect": "extent_recovery"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "conditions": [
+    "fog",
+    "night",
+    "rain",
+    "snow"
+  ],
+  "focus_conditions": [
+    "rain",
+    "snow"
+  ],
+  "class_names": [
+    "road",
+    "sidewalk",
+    "building",
+    "wall",
+    "fence",
+    "pole",
+    "traffic light",
+    "traffic sign",
+    "vegetation",
+    "terrain",
+    "sky",
+    "person",
+    "rider",
+    "car",
+    "truck",
+    "bus",
+    "train",
+    "motorcycle",
+    "bicycle"
+  ],
+  "num_images_by_condition": {
+    "fog": 100,
+    "night": 106,
+    "rain": 100,
+    "snow": 100
+  }
+}
